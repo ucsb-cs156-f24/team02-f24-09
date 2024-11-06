@@ -236,7 +236,8 @@
 <a name='L171'></a><a href='#L171'>171</a>
 <a name='L172'></a><a href='#L172'>172</a>
 <a name='L173'></a><a href='#L173'>173</a>
-<a name='L174'></a><a href='#L174'>174</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,8 +259,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -409,7 +411,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Button, Form, Row, Col} from "react-bootstrap";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // S
@@ -429,8 +431,7 @@ function RecommendationRequestForm({
   const navigate = useNavigate();
   // Stryker disable Regex
   const isodate_regex =
-  /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
-  
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
@@ -452,7 +453,6 @@ function RecommendationRequestForm({
         )}
       &lt;/Row&gt;
       &lt;Row&gt;
-&nbsp;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
             &lt;Form.Label htmlFor="requesterEmail"&gt;Requester Email&lt;/Form.Label&gt;
@@ -466,14 +466,13 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-                {errors.requesterEmail?.message}
+              {errors.requesterEmail?.message}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
-        &lt;/Row&gt;
+      &lt;/Row&gt;
 &nbsp;
-        &lt;Row&gt;
-&nbsp;
+      &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
             &lt;Form.Label htmlFor="professorEmail"&gt;Professor Email&lt;/Form.Label&gt;
@@ -487,7 +486,7 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-                {errors.professorEmail?.message}
+              {errors.professorEmail?.message}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -513,9 +512,11 @@ function RecommendationRequestForm({
         &lt;/Col&gt;
       &lt;/Row&gt;
       &lt;Row&gt;
-      &lt;Col&gt;
+        &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="dateRequested"&gt;Date Requested(iso format)&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="dateRequested"&gt;
+              Date Requested(iso format)
+            &lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
@@ -533,7 +534,9 @@ function RecommendationRequestForm({
         &lt;/Col&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="dateNeeded"&gt;Date Needed(iso format)&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="dateNeeded"&gt;
+              Date Needed(iso format)
+            &lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="RecommendationRequestForm-dateNeeded"
               id="dateNeeded"
@@ -549,9 +552,9 @@ function RecommendationRequestForm({
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
-        &lt;/Row&gt;
+      &lt;/Row&gt;
 &nbsp;
-        &lt;Row&gt;
+      &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
             &lt;Form.Label htmlFor="done"&gt;Done&lt;/Form.Label&gt;
@@ -589,7 +592,7 @@ export default RecommendationRequestForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-06T10:59:21.705Z
+                at 2024-11-06T11:07:57.567Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
