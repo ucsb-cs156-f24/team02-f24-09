@@ -89,18 +89,18 @@ describe("RecommendationRequestEditPage tests", () => {
         .onGet("/api/recommendationrequest", { params: { id: 17 } })
         .reply(200, {
           id: 17,
-          requesterEmail: "onget@email.com",
-          professorEmail: "onget@email.com",
-          explanation: "onget",
+          requesterEmail: "get@email.com",
+          professorEmail: "get@email.com",
+          explanation: "get",
           dateRequested: "2022-03-14T15:00",
           dateNeeded: "2022-03-14T15:00",
           done: false,
         });
       axiosMock.onPut("/api/recommendationrequest").reply(200, {
         id: "17",
-        requesterEmail: "onput@email.com",
-        professorEmail: "onput@email.com",
-        explanation: "onput",
+        requesterEmail: "put@email.com",
+        professorEmail: "put@email.com",
+        explanation: "put",
         dateRequested: "2022-12-25T08:00",
         dateNeeded: "2022-12-25T08:00",
         done: true,
@@ -132,10 +132,18 @@ describe("RecommendationRequestEditPage tests", () => {
       await screen.findByTestId("RecommendationRequestForm-requesterEmail");
 
       const idField = screen.getByTestId("RecommendationRequestForm-id");
-      const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-      const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-      const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-      const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
+      const requesterEmailField = screen.getByTestId(
+        "RecommendationRequestForm-requesterEmail",
+      );
+      const professorEmailField = screen.getByTestId(
+        "RecommendationRequestForm-professorEmail",
+      );
+      const explanationField = screen.getByTestId(
+        "RecommendationRequestForm-explanation",
+      );
+      const dateRequestedField = screen.getByTestId(
+        "RecommendationRequestForm-dateRequested",
+      );
       const dateNeededField = screen.getByTestId(
         "RecommendationRequestForm-dateNeeded",
       );
@@ -145,9 +153,9 @@ describe("RecommendationRequestEditPage tests", () => {
       );
 
       expect(idField).toHaveValue("17");
-      expect(requesterEmailField).toHaveValue("onget@email.com");
-      expect(professorEmailField).toHaveValue("onget@email.com");
-      expect(explanationField).toHaveValue("onget");
+      expect(requesterEmailField).toHaveValue("get@email.com");
+      expect(professorEmailField).toHaveValue("get@email.com");
+      expect(explanationField).toHaveValue("get");
       expect(dateRequestedField).toHaveValue("2022-03-14T15:00");
       expect(dateNeededField).toHaveValue("2022-03-14T15:00");
       expect(doneField).toHaveValue("false");
@@ -187,21 +195,21 @@ describe("RecommendationRequestEditPage tests", () => {
       );
 
       expect(idField).toHaveValue("17");
-      expect(requesterEmailField).toHaveValue("onget@email.com");
-      expect(professorEmailField).toHaveValue("onget@email.com");
-      expect(explanationField).toHaveValue("onget");
+      expect(requesterEmailField).toHaveValue("get@email.com");
+      expect(professorEmailField).toHaveValue("get@email.com");
+      expect(explanationField).toHaveValue("get");
       expect(dateRequestedField).toHaveValue("2022-03-14T15:00");
       expect(dateNeededField).toHaveValue("2022-03-14T15:00");
       expect(doneField).toHaveValue("false");
       expect(submitButton).toBeInTheDocument();
 
       fireEvent.change(requesterEmailField, {
-        target: { value: "onput@email.com" },
+        target: { value: "put@email.com" },
       });
       fireEvent.change(professorEmailField, {
-        target: { value: "onput@email.com" },
+        target: { value: "put@email.com" },
       });
-      fireEvent.change(explanationField, { target: { value: "onput" } });
+      fireEvent.change(explanationField, { target: { value: "put" } });
       fireEvent.change(dateRequestedField, {
         target: { value: "2022-12-25T08:00" },
       });
@@ -224,9 +232,9 @@ describe("RecommendationRequestEditPage tests", () => {
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
       expect(axiosMock.history.put[0].data).toBe(
         JSON.stringify({
-          requesterEmail: "onput@email.com",
-          professorEmail: "onput@email.com",
-          explanation: "onput",
+          requesterEmail: "put@email.com",
+          professorEmail: "put@email.com",
+          explanation: "put",
           dateRequested: "2022-12-25T08:00",
           dateNeeded: "2022-12-25T08:00",
           done: "true",

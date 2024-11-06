@@ -5,7 +5,6 @@ import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -58,11 +57,12 @@ describe("RecommendationRequestCreatePage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("RecommendationRequestForm-requesterEmail")).toBeInTheDocument();
+        screen.getByTestId("RecommendationRequestForm-requesterEmail"),
+      ).toBeInTheDocument();
     });
   });
 
-  test("on submit, makes request to backend, done = false", async () => {
+  test("when you fill in the form and hit submit, it makes a request to the backend, done = false", async () => {
     const queryClient = new QueryClient();
     const recommendationRequest = {
       id: 17,
@@ -111,13 +111,13 @@ describe("RecommendationRequestCreatePage tests", () => {
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
 
     fireEvent.change(requesterEmailField, {
-      target: { value: "someone@email.com" },
+      target: { value: "some@email.com" },
     });
     fireEvent.change(professorEmailField, {
-      target: { value: "someone@email.com" },
+      target: { value: "some@email.com" },
     });
     fireEvent.change(explanationField, {
-      target: { value: "explanation" },
+      target: { value: "some explanation" },
     });
     fireEvent.change(dateRequestedField, {
       target: { value: "2022-02-02T00:00" },
@@ -136,9 +136,9 @@ describe("RecommendationRequestCreatePage tests", () => {
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      requesterEmail: "someone@email.com",
-      professorEmail: "someone@email.com",
-      explanation: "explanation",
+      requesterEmail: "some@email.com",
+      professorEmail: "some@email.com",
+      explanation: "some explanation",
       dateRequested: "2022-02-02T00:00",
       dateNeeded: "2022-02-02T00:00",
       done: false,
@@ -232,9 +232,9 @@ describe("RecommendationRequestCreatePage tests", () => {
       done: true,
     });
 
-    expect(mockToast).toBeCalledWith(
+    expect(mockToast).toHaveBeenCalledWith(
       "New Recommendation Request Created - id: 17",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/recommendationrequest" });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
   });
 });
