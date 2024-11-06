@@ -40,6 +40,6 @@ describe("UCSBOrganization Create Page tests", () => {
 
     // assert
 
-    await screen.findByText("Create page not yet implemented");
+    await screen.findByText("Create New Organization");
   });
 });

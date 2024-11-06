@@ -39,6 +39,6 @@ describe("UCSBOrganization Edit page tests", () => {
     );
 
     // assert
-    await screen.findByText("Edit page not yet implemented");
+    await screen.findByText("Edit Organization");
   });
 });
