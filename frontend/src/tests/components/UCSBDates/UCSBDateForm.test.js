@@ -82,7 +82,9 @@ describe("UCSBDateForm tests", () => {
     const submitButton = screen.getByTestId("UCSBDateForm-submit");
 
     fireEvent.change(quarterYYYYQField, { target: { value: "20221" } });
-    fireEvent.change(nameField, { target: { value: "nooooooon on January 2nd" } });
+    fireEvent.change(nameField, {
+      target: { value: "nooooooon on January 2nd" },
+    });
     fireEvent.change(localDateTimeField, {
       target: { value: "2022-01-02T12:00" },
     });

@@ -27,7 +27,6 @@ function HelpRequestForm({
 
   // Stryker disable next-line all
 
-
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
       <Row>
@@ -73,11 +72,11 @@ function HelpRequestForm({
               type="text"
               isInvalid={Boolean(errors.teamId)}
               {...register("teamId", {
-                required: "The teamId is required"
+                required: "The teamId is required",
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.teamId?.message}  
+              {errors.teamId?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -86,7 +85,9 @@ function HelpRequestForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="tableOrBreakoutRoom">Table or Breakout Room</Form.Label>
+            <Form.Label htmlFor="tableOrBreakoutRoom">
+              Table or Breakout Room
+            </Form.Label>
             <Form.Control
               data-testid="HelpRequestForm-tableOrBreakoutRoom"
               id="tableOrBreakoutRoom"

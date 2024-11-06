@@ -38,16 +38,22 @@ describe("HelpRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("HelpRequestForm-requesterEmail");
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const tableOrBreakoutRoomField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom",
+    );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
     fireEvent.change(requesterEmailField, { target: { value: "bad-input" } });
     fireEvent.change(teamIdField, { target: { value: "bad-input" } });
-    fireEvent.change(tableOrBreakoutRoomField, {target: { value: "bad-input" } });
+    fireEvent.change(tableOrBreakoutRoomField, {
+      target: { value: "bad-input" },
+    });
     fireEvent.change(requestTimeField, { target: { value: "bad-input" } });
     fireEvent.change(solvedField, { target: { value: "bad-input" } });
     fireEvent.change(explanationField, { target: { value: "bad-input" } });
@@ -65,9 +71,13 @@ describe("HelpRequestForm tests", () => {
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
     fireEvent.click(submitButton);
     await screen.findByText(/The table or breakout room is required./);
-    expect(screen.getByText(/The request time is required/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/The request time is required/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/The explanation is required/)).toBeInTheDocument();
-    expect(screen.getByText(/The requester email is required/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/The requester email is required/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/The teamId is required/)).toBeInTheDocument();
   });
 
@@ -80,9 +90,13 @@ describe("HelpRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("HelpRequestForm-requesterEmail");
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const tableOrBreakoutRoomField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom",
+    );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
