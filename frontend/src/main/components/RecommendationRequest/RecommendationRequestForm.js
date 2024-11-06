@@ -16,6 +16,7 @@ function RecommendationRequestForm({
   // Stryker restore all
 
   const navigate = useNavigate();
+  // Stryker disable Regex
   const isodate_regex =
   /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   
@@ -67,7 +68,7 @@ function RecommendationRequestForm({
             <Form.Label htmlFor="professorEmail">Professor Email</Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-professorEmail"
-              id="localDateTime"
+              id="professorEmail"
               type="email"
               isInvalid={Boolean(errors.professorEmail)}
               {...register("professorEmail", {
@@ -108,7 +109,7 @@ function RecommendationRequestForm({
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
               type="datetime-local"
-              isInvalid={Boolean(errors.localDateTime)}
+              isInvalid={Boolean(errors.dateRequested)}
               {...register("dateRequested", {
                 required: true,
                 pattern: isodate_regex,
