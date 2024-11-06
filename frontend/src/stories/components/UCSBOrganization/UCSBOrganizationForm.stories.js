@@ -4,7 +4,7 @@ import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
 
 export default {
   title: "components/UCSBOrganization/UCSBOrganizationForm",
-  component: UCSBOrganizationForm
+  component: UCSBOrganizationForm,
 };
 
 const Template = (args) => {
