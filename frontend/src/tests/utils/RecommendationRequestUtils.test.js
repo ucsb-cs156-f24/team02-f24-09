@@ -1,4 +1,7 @@
-import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/RecommendationRequestUtils";
+import {
+  onDeleteSuccess,
+  cellToAxiosParamsDelete,
+} from "main/utils/RecommendationRequestUtils";
 import mockConsole from "jest-mock-console";
 import { toast } from "react-toastify";
 
