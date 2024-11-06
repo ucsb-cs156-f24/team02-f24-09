@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col} from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // S
@@ -18,8 +18,7 @@ function RecommendationRequestForm({
   const navigate = useNavigate();
   // Stryker disable Regex
   const isodate_regex =
-  /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
-  
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -41,7 +40,6 @@ function RecommendationRequestForm({
         )}
       </Row>
       <Row>
-
         <Col>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="requesterEmail">Requester Email</Form.Label>
@@ -55,14 +53,13 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-                {errors.requesterEmail?.message}
+              {errors.requesterEmail?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
-        </Row>
+      </Row>
 
-        <Row>
-
+      <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="professorEmail">Professor Email</Form.Label>
@@ -76,7 +73,7 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-                {errors.professorEmail?.message}
+              {errors.professorEmail?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -102,9 +99,11 @@ function RecommendationRequestForm({
         </Col>
       </Row>
       <Row>
-      <Col>
+        <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateRequested">Date Requested(iso format)</Form.Label>
+            <Form.Label htmlFor="dateRequested">
+              Date Requested(iso format)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
@@ -122,7 +121,9 @@ function RecommendationRequestForm({
         </Col>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateNeeded">Date Needed(iso format)</Form.Label>
+            <Form.Label htmlFor="dateNeeded">
+              Date Needed(iso format)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateNeeded"
               id="dateNeeded"
@@ -138,9 +139,9 @@ function RecommendationRequestForm({
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
-        </Row>
+      </Row>
 
-        <Row>
+      <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="done">Done</Form.Label>

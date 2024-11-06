@@ -31,14 +31,16 @@ describe("RecommendationRequestForm tests", () => {
   test("renders correctly when passing in a RecommendationRequest", async () => {
     render(
       <Router>
-        <RecommendationRequestForm initialContents={recommendationRequestFixtures.oneRequest} />
+        <RecommendationRequestForm
+          initialContents={recommendationRequestFixtures.oneRequest}
+        />
       </Router>,
     );
     await screen.findByTestId(/RecommendationRequestForm-id/);
-        expect(screen.getByText(/Id/)).toBeInTheDocument();
+    expect(screen.getByText(/Id/)).toBeInTheDocument();
     expect(screen.getByTestId(/RecommendationRequestForm-id/)).toHaveValue("1");
   });
-  
+
   test("Correct Error messsages on bad input", async () => {
     render(
       <Router>
@@ -46,11 +48,21 @@ describe("RecommendationRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-submit");
-    const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-    const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-    const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-    const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-    const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
+    const requesterEmailField = screen.getByTestId(
+      "RecommendationRequestForm-requesterEmail",
+    );
+    const professorEmailField = screen.getByTestId(
+      "RecommendationRequestForm-professorEmail",
+    );
+    const explanationField = screen.getByTestId(
+      "RecommendationRequestForm-explanation",
+    );
+    const dateRequestedField = screen.getByTestId(
+      "RecommendationRequestForm-dateRequested",
+    );
+    const dateNeededField = screen.getByTestId(
+      "RecommendationRequestForm-dateNeeded",
+    );
     const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
     fireEvent.change(requesterEmailField, { target: { value: "bad-input" } });
@@ -93,18 +105,38 @@ describe("RecommendationRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-requesterEmail");
-    const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-    const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-    const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-    const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-    const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
+    const requesterEmailField = screen.getByTestId(
+      "RecommendationRequestForm-requesterEmail",
+    );
+    const professorEmailField = screen.getByTestId(
+      "RecommendationRequestForm-professorEmail",
+    );
+    const explanationField = screen.getByTestId(
+      "RecommendationRequestForm-explanation",
+    );
+    const dateRequestedField = screen.getByTestId(
+      "RecommendationRequestForm-dateRequested",
+    );
+    const dateNeededField = screen.getByTestId(
+      "RecommendationRequestForm-dateNeeded",
+    );
     const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
-    fireEvent.change(requesterEmailField, { target: { value: "test@gmail.com" } });
-    fireEvent.change(professorEmailField, { target: { value: "sample@gmail.com" } });
-    fireEvent.change(explanationField, { target: { value: "test explanation" } });
-    fireEvent.change(dateRequestedField, { target: { value: "2024-11-04T12:00:00" } });
-    fireEvent.change(dateNeededField, { target: { value: "2024-12-04T12:00:00" } });
+    fireEvent.change(requesterEmailField, {
+      target: { value: "test@gmail.com" },
+    });
+    fireEvent.change(professorEmailField, {
+      target: { value: "sample@gmail.com" },
+    });
+    fireEvent.change(explanationField, {
+      target: { value: "test explanation" },
+    });
+    fireEvent.change(dateRequestedField, {
+      target: { value: "2024-11-04T12:00:00" },
+    });
+    fireEvent.change(dateNeededField, {
+      target: { value: "2024-12-04T12:00:00" },
+    });
     fireEvent.change(doneField, { target: { value: "true" } });
     fireEvent.click(submitButton);
 
