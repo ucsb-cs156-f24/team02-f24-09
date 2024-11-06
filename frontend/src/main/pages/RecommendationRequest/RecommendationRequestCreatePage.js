@@ -32,7 +32,7 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
 
   const onSubmit = async (data) => {
     // Ensure done is a boolean before sending to the backend
-    data.done = data.done === "true" || data.done === true;
+    data.done = data.done === "true";
     mutation.mutate(data);
   };
 
