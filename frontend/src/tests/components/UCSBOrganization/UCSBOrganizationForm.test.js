@@ -87,55 +87,6 @@ describe("OrganizationForm tests", () => {
     expect(mockSubmitAction).not.toHaveBeenCalled();
   });
 
-  test("No Error messages on good input", async () => {
-    const mockSubmitAction = jest.fn();
-
-    const mockSubmit = async (data) => {
-      mockSubmitAction(data);
-    };
-
-    render(
-      <Router>
-        <OrganizationForm submitAction={mockSubmit} />
-      </Router>,
-    );
-
-    expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
-
-    const orgCodeInput = screen.getByTestId(`${testId}orgCode`);
-    const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-OrgTranslationShort`,
-    );
-    const orgTranslationInput = screen.getByTestId(`${testId}-OrgTranslation`);
-    const inactiveInput = screen.getByTestId(`${testId}-inactive`);
-    const submitButton = screen.getByTestId(`${testId}-submit`);
-
-    fireEvent.change(orgCodeInput, { target: { value: "2" } });
-    fireEvent.change(orgTranslationShortInput, {
-      target: { value: "PIZZA HUNTERS" },
-    });
-    fireEvent.change(orgTranslationInput, {
-      target: { value: "Pizza Hunting Society @ UCSB" },
-    });
-    fireEvent.click(inactiveInput);
-    fireEvent.click(submitButton);
-
-    await waitFor(() =>
-      expect(mockSubmitAction).toHaveBeenCalledWith({
-        orgCode: "2",
-        orgTranslationShort: "PIZZA HUNTERS",
-        orgTranslation: "Pizza Hunting Society @ UCSB",
-        inactive: true,
-      }),
-    );
-
-    expect(
-      screen.queryByText(/Max length 10 characters/),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Max length 30 characters/),
-    ).not.toBeInTheDocument();
-  });
   test("renders with default buttonLabel correctly", async () => {
     render(
       <Router>

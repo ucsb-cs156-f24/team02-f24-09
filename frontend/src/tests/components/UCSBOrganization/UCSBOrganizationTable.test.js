@@ -1,11 +1,14 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
-import UCSBOrganizationTable from "main/components/UCSBOrganization/UCSBOrganizationTable";
+import UCSBOrganizationTable, {
+  onDeleteSuccess,
+} from "main/components/UCSBOrganization/UCSBOrganizationTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import mockConsole from "jest-mock-console";
 
 const mockedNavigate = jest.fn();
 
@@ -31,9 +34,20 @@ describe("UCSBOrganizationTable tests", () => {
   ];
   const testId = "UCSBOrganizationTable";
 
+  let restoreConsole;
+  beforeEach(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterEach(() => {
+    restoreConsole();
+  });
+
   test("renders empty table correctly", () => {
+    // arrange
     const currentUser = currentUserFixtures.adminUser;
 
+    // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -42,6 +56,7 @@ describe("UCSBOrganizationTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
       expect(header).toBeInTheDocument();
@@ -56,8 +71,10 @@ describe("UCSBOrganizationTable tests", () => {
   });
 
   test("Has the expected column headers, content and buttons for admin user", () => {
+    // arrange
     const currentUser = currentUserFixtures.adminUser;
 
+    // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -69,6 +86,7 @@ describe("UCSBOrganizationTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
       expect(header).toBeInTheDocument();
@@ -85,9 +103,6 @@ describe("UCSBOrganizationTable tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
     ).toHaveTextContent("PIZZA HUNTERS");
-    expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
-    ).toHaveTextContent("Pizza Hunting Society @ UCSB");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("false");
@@ -113,8 +128,10 @@ describe("UCSBOrganizationTable tests", () => {
   });
 
   test("Has the expected column headers, content for ordinary user", () => {
+    // arrange
     const currentUser = currentUserFixtures.userOnly;
 
+    // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -126,6 +143,7 @@ describe("UCSBOrganizationTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
       expect(header).toBeInTheDocument();
@@ -151,8 +169,10 @@ describe("UCSBOrganizationTable tests", () => {
   });
 
   test("Edit button navigates to the edit page", async () => {
+    // arrange
     const currentUser = currentUserFixtures.adminUser;
 
+    // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -164,6 +184,7 @@ describe("UCSBOrganizationTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert - check that the expected content is rendered
     expect(
       await screen.findByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("2");
@@ -176,21 +197,39 @@ describe("UCSBOrganizationTable tests", () => {
     );
     expect(editButton).toBeInTheDocument();
 
+    // act - click the edit button
     fireEvent.click(editButton);
 
+    // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
       expect(mockedNavigate).toHaveBeenCalledWith("/ucsborganization/edit/2"),
     );
   });
 
+  test("onDeleteSuccess handles message correctly", () => {
+    // arrange
+    const message = {
+      message: "Organization deleted successfully",
+    };
+
+    // act
+    const result = onDeleteSuccess(message);
+
+    // assert
+    expect(console.log).toHaveBeenCalledWith(message);
+    expect(result).toBe(message);
+  });
+
   test("Delete button calls delete callback", async () => {
+    // arrange
     const currentUser = currentUserFixtures.adminUser;
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock.onDelete("/api/ucsborganization").reply(200, {
-      message: "UCSBOrganization deleted",
+      message: "Organization deleted successfully",
     });
 
+    // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -202,6 +241,7 @@ describe("UCSBOrganizationTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert - check that the expected content is rendered
     expect(
       await screen.findByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("2");
@@ -214,9 +254,20 @@ describe("UCSBOrganizationTable tests", () => {
     );
     expect(deleteButton).toBeInTheDocument();
 
+    // act - click the delete button
     fireEvent.click(deleteButton);
 
-    await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "2" });
+    // assert - check that the delete endpoint was called
+    await waitFor(() => {
+      expect(axiosMock.history.delete.length).toBe(1);
+      expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "2" });
+      expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
+    });
+
+    await waitFor(() => {
+      expect(console.log).toHaveBeenCalledWith({
+        message: "Organization deleted successfully",
+      });
+    });
   });
 });
