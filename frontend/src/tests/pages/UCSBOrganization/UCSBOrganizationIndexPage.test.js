@@ -40,6 +40,5 @@ describe("UCSB Organization tests", () => {
     );
 
     await screen.findByText("UCSB Organizations");
-
   });
 });
