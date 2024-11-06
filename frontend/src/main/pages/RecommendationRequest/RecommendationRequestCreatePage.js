@@ -14,24 +14,26 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
       explanation: recommendationRequest.explanation,
       dateRequested: recommendationRequest.dateRequested,
       dateNeeded: recommendationRequest.dateNeeded,
-      done: recommendationRequest.done, // done should be passed as a boolean
+      done: recommendationRequest.done,
     },
   });
 
   const onSuccess = (recommendationRequest) => {
-    toast(`New Recommendation Request Created - id: ${recommendationRequest.id}`);
+    toast(
+      `New Recommendation Request Created - id: ${recommendationRequest.id}`,
+    );
   };
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
     { onSuccess },
-    ["/api/recommendationrequest/all"]
+    // Stryker disable next-line all : hard to set up test for caching
+    ["/api/recommendationrequest/all"],
   );
 
   const { isSuccess } = mutation;
 
   const onSubmit = async (data) => {
-    // Ensure done is a boolean before sending to the backend
     data.done = data.done === "true";
     mutation.mutate(data);
   };
@@ -44,6 +46,7 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
     <BasicLayout>
       <div className="pt-2">
         <h1>Create New Recommendation Request</h1>
+
         <RecommendationRequestForm submitAction={onSubmit} />
       </div>
     </BasicLayout>
