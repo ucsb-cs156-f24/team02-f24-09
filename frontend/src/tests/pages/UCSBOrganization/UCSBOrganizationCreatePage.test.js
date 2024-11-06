@@ -1,5 +1,5 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import { render, screen} from "@testing-library/react";
+//import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,8 +7,9 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 
-describe("PlaceholderCreatePage tests", () => {
+describe("UCSBOrganization Create Page tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   const setupUserOnly = () => {
@@ -32,7 +33,7 @@ describe("PlaceholderCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <PlaceholderCreatePage />
+          <UCSBOrganizationCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
