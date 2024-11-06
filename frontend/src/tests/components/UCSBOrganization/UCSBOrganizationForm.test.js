@@ -19,16 +19,16 @@ describe("OrganizationForm tests", () => {
         <OrganizationForm
           initialContents={ucsbOrganizationFixtures.oneOrganization[0]}
         />
-      </Router>
+      </Router>,
     );
 
     expect(await screen.findByTestId(`${testId}orgCode`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}orgCode`)).toHaveValue("1");
     expect(screen.getByTestId(`${testId}-OrgTranslationShort`)).toHaveValue(
-      "NAPPING LEAGUE"
+      "NAPPING LEAGUE",
     );
     expect(screen.getByTestId(`${testId}-OrgTranslation`)).toHaveValue(
-      "Professional Napping League at UCSB"
+      "Professional Napping League at UCSB",
     );
     const inactive = screen.getByTestId(`${testId}-inactive`);
     expect(inactive).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe("OrganizationForm tests", () => {
     render(
       <Router>
         <OrganizationForm />
-      </Router>
+      </Router>,
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
     const cancelButton = screen.getByTestId(`${testId}-cancel`);
@@ -54,7 +54,7 @@ describe("OrganizationForm tests", () => {
     render(
       <Router>
         <OrganizationForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
 
     expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
@@ -63,13 +63,13 @@ describe("OrganizationForm tests", () => {
 
     await screen.findByText(/orgCode is required./);
     expect(
-      screen.getByText(/OrgTranslationShort is required./)
+      screen.getByText(/OrgTranslationShort is required./),
     ).toBeInTheDocument();
     expect(screen.getByText(/OrgTranslation is required./)).toBeInTheDocument();
 
     const orgCodeInput = screen.getByTestId(`${testId}orgCode`);
     const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-OrgTranslationShort`
+      `${testId}-OrgTranslationShort`,
     );
     const orgTranslationInput = screen.getByTestId(`${testId}-OrgTranslation`);
 
@@ -97,14 +97,14 @@ describe("OrganizationForm tests", () => {
     render(
       <Router>
         <OrganizationForm submitAction={mockSubmit} />
-      </Router>
+      </Router>,
     );
 
     expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
 
     const orgCodeInput = screen.getByTestId(`${testId}orgCode`);
     const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-OrgTranslationShort`
+      `${testId}-OrgTranslationShort`,
     );
     const orgTranslationInput = screen.getByTestId(`${testId}-OrgTranslation`);
     const inactiveInput = screen.getByTestId(`${testId}-inactive`);
@@ -126,21 +126,21 @@ describe("OrganizationForm tests", () => {
         orgTranslationShort: "PIZZA HUNTERS",
         orgTranslation: "Pizza Hunting Society @ UCSB",
         inactive: true,
-      })
+      }),
     );
 
     expect(
-      screen.queryByText(/Max length 10 characters/)
+      screen.queryByText(/Max length 10 characters/),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Max length 30 characters/)
+      screen.queryByText(/Max length 30 characters/),
     ).not.toBeInTheDocument();
   });
   test("renders with default buttonLabel correctly", async () => {
     render(
       <Router>
         <OrganizationForm />
-      </Router>
+      </Router>,
     );
 
     const submitButton = await screen.findByTestId("OrganizationForm-submit");
