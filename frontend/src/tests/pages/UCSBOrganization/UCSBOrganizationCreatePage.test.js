@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-//import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import PlaceholderCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,9 +7,9 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 
-describe("UCSBOrganization Create Page tests", () => {
+describe("UCSBOrganizationCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   const setupUserOnly = () => {
@@ -40,6 +40,6 @@ describe("UCSBOrganization Create Page tests", () => {
 
     // assert
 
-    await screen.findByText("Create New Organization");
+    await screen.findByText("Create page not yet implemented");
   });
 });

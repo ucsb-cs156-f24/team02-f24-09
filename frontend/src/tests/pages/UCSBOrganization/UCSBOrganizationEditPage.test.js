@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-//import UCSBOrganizationEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
+import PlaceholderEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import UCSBOrganizationEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
 
-describe("UCSBOrganization Edit page tests", () => {
+describe("UCSBOrganizationEditPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   const setupUserOnly = () => {
@@ -39,6 +39,6 @@ describe("UCSBOrganization Edit page tests", () => {
     );
 
     // assert
-    await screen.findByText("Edit Organization");
+    await screen.findByText("Edit page not yet implemented");
   });
 });
