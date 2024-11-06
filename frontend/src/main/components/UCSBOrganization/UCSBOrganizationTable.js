@@ -9,9 +9,9 @@ export function cellToAxiosParamsDelete(cell) {
     url: "/api/ucsborganization",
     method: "DELETE",
     params: {
-      orgCode: cell.row.values.orgCode
-    }
-  }
+      orgCode: cell.row.values.orgCode,
+    },
+  };
 }
 
 export function onDeleteSuccess(message) {
@@ -22,7 +22,7 @@ export function onDeleteSuccess(message) {
 export default function UCSBOrganizationTable({
   organizations,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable"
+  testIdPrefix = "UCSBOrganizationTable",
 }) {
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"]
+    ["/api/ucsborganization/all"],
   );
   // Stryker restore all
 
@@ -59,22 +59,18 @@ export default function UCSBOrganizationTable({
     {
       Header: "Inactive",
       id: "inactive",
-      accessor: (row, _rowIndex) => String(row.inactive)
-    }
+      accessor: (row, _rowIndex) => String(row.inactive),
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix)
+      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
   }
 
   return (
-    <OurTable
-      data={organizations}
-      columns={columns}
-      testid={testIdPrefix}
-    />
+    <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
   );
 }
