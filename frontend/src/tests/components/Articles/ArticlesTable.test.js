@@ -2,10 +2,7 @@ import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-import {
-  cellToAxiosParamsDelete,
-  onDeleteSuccess,
-} from "main/utils/articleUtils";
+import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import ArticlesTable from "main/components/Articles/ArticlesTable";
 import { articlesFixtures } from "fixtures/articlesFixtures";
