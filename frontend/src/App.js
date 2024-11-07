@@ -19,9 +19,6 @@ import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
-import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
-import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
-import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 
 function App() {
   const { data: currentUser } = useCurrentUser();
