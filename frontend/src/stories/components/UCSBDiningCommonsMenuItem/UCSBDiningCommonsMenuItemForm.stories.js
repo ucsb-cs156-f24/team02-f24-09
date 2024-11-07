@@ -3,7 +3,8 @@ import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenu
 import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
 
 export default {
-  title: "components/UCSBDiningCommonsMenuItemForm/UCSBDiningCommonsMenuItemForm",
+  title:
+    "components/UCSBDiningCommonsMenuItemForm/UCSBDiningCommonsMenuItemForm",
   component: UCSBDiningCommonsMenuItemForm,
 };
 
@@ -24,7 +25,8 @@ Create.args = {
 export const Update = Template.bind({});
 
 Update.args = {
-  initialContents: ucsbDiningCommonsMenuItemFixtures.oneucsbDiningCommonsMenuItem,
+  initialContents:
+    ucsbDiningCommonsMenuItemFixtures.oneucsbDiningCommonsMenuItem,
   buttonLabel: "Update",
   submitAction: (data) => {
     console.log("Submit was clicked with data: ", data);
