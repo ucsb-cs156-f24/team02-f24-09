@@ -71,7 +71,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "some explanation",
       dateRequeted: "2022-02-02T00:00",
       dateNeeded: "2022-02-02T00:00",
-      done: false,
+      doneBool: false,
     };
 
     axiosMock
@@ -141,7 +141,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "some explanation",
       dateRequested: "2022-02-02T00:00",
       dateNeeded: "2022-02-02T00:00",
-      done: false,
+      doneBool: false,
     });
 
     expect(mockToast).toHaveBeenCalledWith(
@@ -159,7 +159,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "some explanation",
       dateRequeted: "2022-02-02T00:00",
       dateNeeded: "2022-02-02T00:00",
-      done: true,
+      doneBool: true,
     };
 
     axiosMock
@@ -229,7 +229,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "some explanation",
       dateRequested: "2022-02-02T00:00",
       dateNeeded: "2022-02-02T00:00",
-      done: true,
+      doneBool: true,
     });
 
     expect(mockToast).toHaveBeenCalledWith(

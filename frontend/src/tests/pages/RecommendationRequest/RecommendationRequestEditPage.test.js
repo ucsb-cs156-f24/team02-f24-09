@@ -94,7 +94,7 @@ describe("RecommendationRequestEditPage tests", () => {
           explanation: "get",
           dateRequested: "2022-03-14T15:00",
           dateNeeded: "2022-03-14T15:00",
-          done: false,
+          doneBool: false,
         });
       axiosMock.onPut("/api/recommendationrequests").reply(200, {
         id: "17",
@@ -103,7 +103,7 @@ describe("RecommendationRequestEditPage tests", () => {
         explanation: "put",
         dateRequested: "2022-12-25T08:00",
         dateNeeded: "2022-12-25T08:00",
-        done: true,
+        doneBool: true,
       });
     });
 
@@ -237,7 +237,7 @@ describe("RecommendationRequestEditPage tests", () => {
           explanation: "put",
           dateRequested: "2022-12-25T08:00",
           dateNeeded: "2022-12-25T08:00",
-          done: "true",
+          doneBool: "true",
         }),
       ); // posted object
     });
