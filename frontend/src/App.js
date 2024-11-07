@@ -19,6 +19,9 @@ import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
+import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
+import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
+import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 
 function App() {
   const { data: currentUser } = useCurrentUser();
@@ -77,7 +80,7 @@ function App() {
           <>
             <Route
               exact
-              path="/ucsborganization"
+              path="/ucsborganizations"
               element={<UCSBOrganizationIndexPage />}
             />
           </>
@@ -86,13 +89,36 @@ function App() {
           <>
             <Route
               exact
-              path="/ucsborganization/edit/:orgCode"
+              path="/ucsborganizations/edit/:id"
               element={<UCSBOrganizationEditPage />}
             />
             <Route
               exact
-              path="/ucsborganization/create"
+              path="/ucsborganizations/create"
               element={<UCSBOrganizationCreatePage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/placeholder"
+              element={<PlaceholderIndexPage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/placeholder/edit/:id"
+              element={<PlaceholderEditPage />}
+            />
+            <Route
+              exact
+              path="/placeholder/create"
+              element={<PlaceholderCreatePage />}
             />
           </>
         )}
