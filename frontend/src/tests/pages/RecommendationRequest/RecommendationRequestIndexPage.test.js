@@ -51,7 +51,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     // arrange
     setupAdminUser();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/recommendationrequest/all").reply(200, []);
+    axiosMock.onGet("/api/recommendationrequests/all").reply(200, []);
 
     // act
     render(
@@ -78,7 +78,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     setupUserOnly();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/recommendationrequest/all")
+      .onGet("/api/recommendationrequests/all")
       .reply(200, recommendationRequestFixtures.threeRequests);
 
     // act
@@ -113,7 +113,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     // arrange
     setupUserOnly();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/recommendationrequest/all").timeout();
+    axiosMock.onGet("/api/recommendationrequests/all").timeout();
     const restoreConsole = mockConsole();
 
     // act
@@ -132,7 +132,7 @@ describe("RecommendationRequestIndexPage tests", () => {
 
     const errorMessage = console.error.mock.calls[0][0];
     expect(errorMessage).toMatch(
-      "Error communicating with backend via GET on /api/recommendationrequest/all",
+      "Error communicating with backend via GET on /api/recommendationrequests/all",
     );
     restoreConsole();
 
@@ -146,10 +146,10 @@ describe("RecommendationRequestIndexPage tests", () => {
     setupAdminUser();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/recommendationrequest/all")
+      .onGet("/api/recommendationrequests/all")
       .reply(200, recommendationRequestFixtures.threeRequests);
     axiosMock
-      .onDelete("/api/recommendationrequest")
+      .onDelete("/api/recommendationrequests")
       .reply(200, "Recommendation Request with id 1 was deleted");
 
     // act

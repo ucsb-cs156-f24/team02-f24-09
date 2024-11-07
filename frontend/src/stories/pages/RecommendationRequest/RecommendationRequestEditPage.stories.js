@@ -26,12 +26,12 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/recommendationrequest", () => {
+    http.get("/api/recommendationrequests", () => {
       return HttpResponse.json(recommendationRequestFixtures.threeRequests[0], {
         status: 200,
       });
     }),
-    http.put("/api/recommendationrequest", () => {
+    http.put("/api/recommendationrequests", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],

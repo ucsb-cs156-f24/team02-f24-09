@@ -58,10 +58,10 @@ ThreeItemsAdminUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/recommendationrequest/all", () => {
+    http.get("/api/recommendationrequests/all", () => {
       return HttpResponse.json(recommendationRequestFixtures.threeRequests);
     }),
-    http.delete("/api/recommendationrequest", () => {
+    http.delete("/api/recommendationrequests", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],

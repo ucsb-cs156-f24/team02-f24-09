@@ -50,7 +50,7 @@ describe("RecommendationRequestEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/recommendationrequest", { params: { id: 17 } })
+        .onGet("/api/recommendationrequests", { params: { id: 17 } })
         .timeout();
     });
 
@@ -86,7 +86,7 @@ describe("RecommendationRequestEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/recommendationrequest", { params: { id: 17 } })
+        .onGet("/api/recommendationrequests", { params: { id: 17 } })
         .reply(200, {
           id: 17,
           requesterEmail: "get@email.com",
@@ -96,7 +96,7 @@ describe("RecommendationRequestEditPage tests", () => {
           dateNeeded: "2022-03-14T15:00",
           done: false,
         });
-      axiosMock.onPut("/api/recommendationrequest").reply(200, {
+      axiosMock.onPut("/api/recommendationrequests").reply(200, {
         id: "17",
         requesterEmail: "put@email.com",
         professorEmail: "put@email.com",
