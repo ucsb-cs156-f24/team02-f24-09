@@ -71,7 +71,9 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
       station: "special",
     };
 
-    axiosMock.onPost("/api/ucsbdiningcommonsmenuitem/post").reply(202, ucsbDiningcommonsmenuitem);
+    axiosMock
+      .onPost("/api/ucsbdiningcommonsmenuitem/post")
+      .reply(202, ucsbDiningcommonsmenuitem);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -87,10 +89,16 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
       ).toBeInTheDocument();
     });
 
-    const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-diningCommonsCode");
+    const diningCommonsCodeField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-diningCommonsCode",
+    );
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-name");
-    const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-station");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit");
+    const stationField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-station",
+    );
+    const submitButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-submit",
+    );
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "dlg" } });
     fireEvent.change(nameField, { target: { value: "food" } });
@@ -116,4 +124,3 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitem" });
   });
 });
-
