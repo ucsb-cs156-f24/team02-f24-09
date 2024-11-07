@@ -1,7 +1,7 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import ArticlesForm from "main/components/Articles/ArticlesForm";
 import { articlesFixtures } from "fixtures/articlesFixtures";
-import { BrowserRouter as Router } from "react-router-dom";
 
 const mockedNavigate = jest.fn();
 
@@ -17,10 +17,11 @@ describe("ArticlesForm tests", () => {
         <ArticlesForm />
       </Router>,
     );
+    await screen.findByText(/Title/);
     await screen.findByText(/Create/);
   });
 
-  test("renders correctly when passing in a Article", async () => {
+  test("renders correctly when passing in an Article", async () => {
     render(
       <Router>
         <ArticlesForm initialContents={articlesFixtures.oneArticle} />
@@ -46,6 +47,7 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(dateAddedField, { target: { value: "bad-input" } });
     fireEvent.click(submitButton);
 
+    await screen.findByText(/Date must be in ISO format/);
   });
 
   test("Correct Error messsages on missing input", async () => {
@@ -59,11 +61,11 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.click(submitButton);
 
-    await screen.findByText(/title is required./);
-    expect(screen.getByText(/url is required./)).toBeInTheDocument();
-    expect(screen.getByText(/explanation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/email is required./)).toBeInTheDocument();
-    expect(screen.getByText(/dateAdded is required./)).toBeInTheDocument();
+    await screen.findByText(/Email is required./);
+    expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
+    expect(screen.getByText(/URL is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Title is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Date must be in ISO format./)).toBeInTheDocument();
   });
 
   test("No Error messsages on good input", async () => {
@@ -75,27 +77,29 @@ describe("ArticlesForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("ArticlesForm-title");
+    const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
     const emailField = screen.getByTestId("ArticlesForm-email");
     const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
-    const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(titleField, { target: { value: "20221" } });
-    fireEvent.change(urlField, { target: { value: "something.com" } });
-    fireEvent.change(explanationField, { target: { value: "explanation" } });
-    fireEvent.change(emailField, { target: { value: "email" } });
+    fireEvent.change(titleField, { target: { value: "title_testing" } });
+    fireEvent.change(urlField, { target: { value: "url_testing" } });
+    fireEvent.change(explanationField, {
+      target: { value: "explanation_testing" },
+    });
+    fireEvent.change(emailField, { target: { value: "email_testing" } });
     fireEvent.change(dateAddedField, {
-      target: { value: "2022-01-02T12:00" },
+      target: { value: "2022-01-02T12:00:00" },
     });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
     expect(
-      screen.queryByText(/dateAdded must be in ISO format/),
+      screen.queryByText(/Date must be in ISO format/),
     ).not.toBeInTheDocument();
   });
 
