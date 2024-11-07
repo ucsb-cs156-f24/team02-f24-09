@@ -53,7 +53,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
         <MemoryRouter>
           <UCSBOrganizationCreatePage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -77,7 +77,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
         <MemoryRouter>
           <UCSBOrganizationCreatePage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -87,7 +87,9 @@ describe("UCSBOrganizationCreatePage tests", () => {
     const orgCodeInput = screen.getByLabelText("orgCode");
     expect(orgCodeInput).toBeInTheDocument();
 
-    const orgTranslationShortInput = screen.getByLabelText("OrgTranslationShort");
+    const orgTranslationShortInput = screen.getByLabelText(
+      "OrgTranslationShort",
+    );
     expect(orgTranslationShortInput).toBeInTheDocument();
 
     const orgTranslationInput = screen.getByLabelText("OrgTranslation");
@@ -100,8 +102,12 @@ describe("UCSBOrganizationCreatePage tests", () => {
     expect(createButton).toBeInTheDocument();
 
     fireEvent.change(orgCodeInput, { target: { value: "ZPR" } });
-    fireEvent.change(orgTranslationShortInput, { target: { value: "ZETA PHI RHO" } });
-    fireEvent.change(orgTranslationInput, { target: { value: "ZETA PHI RHO" } });
+    fireEvent.change(orgTranslationShortInput, {
+      target: { value: "ZETA PHI RHO" },
+    });
+    fireEvent.change(orgTranslationInput, {
+      target: { value: "ZETA PHI RHO" },
+    });
     fireEvent.click(inactiveInput);
     fireEvent.click(createButton);
 
@@ -115,7 +121,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
     });
 
     expect(mockToast).toBeCalledWith(
-      "New organization Created - orgCode: ZPR orgTranslationShort: ZETA PHI RHO"
+      "New organization Created - orgCode: ZPR orgTranslationShort: ZETA PHI RHO",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
   });
