@@ -68,7 +68,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
       orgCode: "ZPR",
       orgTranslationShort: "ZETA PHI RHO",
       orgTranslation: "ZETA PHI RHO",
-      inactive: false
+      inactive: false,
     };
 
     axiosMock.onPost("/api/ucsborganization/post").reply(202, organization);
@@ -88,7 +88,9 @@ describe("UCSBOrganizationCreatePage tests", () => {
     const orgCodeInput = screen.getByLabelText("orgCode");
     expect(orgCodeInput).toBeInTheDocument();
 
-    const orgTranslationShortInput = screen.getByLabelText("OrgTranslationShort");
+    const orgTranslationShortInput = screen.getByLabelText(
+      "OrgTranslationShort",
+    );
     expect(orgTranslationShortInput).toBeInTheDocument();
 
     const orgTranslationInput = screen.getByLabelText("OrgTranslation");
@@ -101,8 +103,12 @@ describe("UCSBOrganizationCreatePage tests", () => {
     expect(createButton).toBeInTheDocument();
 
     fireEvent.change(orgCodeInput, { target: { value: "ZPR" } });
-    fireEvent.change(orgTranslationShortInput, { target: { value: "ZETA PHI RHO" } });
-    fireEvent.change(orgTranslationInput, { target: { value: "ZETA PHI RHO" } });
+    fireEvent.change(orgTranslationShortInput, {
+      target: { value: "ZETA PHI RHO" },
+    });
+    fireEvent.change(orgTranslationInput, {
+      target: { value: "ZETA PHI RHO" },
+    });
     fireEvent.change(inactiveInput, { target: { value: false } });
     fireEvent.click(createButton);
 
@@ -112,11 +118,11 @@ describe("UCSBOrganizationCreatePage tests", () => {
       orgCode: "ZPR",
       orgTranslationShort: "ZETA PHI RHO",
       orgTranslation: "ZETA PHI RHO",
-      inactive: false
+      inactive: false,
     });
 
     expect(mockToast).toBeCalledWith(
-      "New organization Created - orgCode: ZPR orgTranslationShort: ZETA PHI RHO"
+      "New organization Created - orgCode: ZPR orgTranslationShort: ZETA PHI RHO",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
   });

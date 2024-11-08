@@ -1,11 +1,10 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import OrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function OrganizationCreatePage({ storybook = false }) {
-
   const objectToAxiosParams = (organization) => ({
     url: "/api/ucsborganization/post",
     method: "POST",
@@ -13,19 +12,21 @@ export default function OrganizationCreatePage({ storybook = false }) {
       orgCode: organization.orgCode,
       orgTranslationShort: organization.orgTranslationShort,
       orgTranslation: organization.orgTranslation,
-      inactive: organization.inactive
-    }
+      inactive: organization.inactive,
+    },
   });
 
   const onSuccess = (organization) => {
-    toast(`New organization Created - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}`);
+    toast(
+      `New organization Created - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}`,
+    );
   };
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    ["/api/ucsborganization/all"]
+    ["/api/ucsborganization/all"],
   );
 
   const { isSuccess } = mutation;
