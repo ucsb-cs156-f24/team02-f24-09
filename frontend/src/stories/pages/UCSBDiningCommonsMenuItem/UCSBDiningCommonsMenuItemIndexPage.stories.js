@@ -60,12 +60,12 @@ ThreeItemsAdminUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/ucsbdates/all", () => {
+    http.get("/api/ucsbdiningcommonsmenuitem/all", () => {
       return HttpResponse.json(
         ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
       );
     }),
-    http.delete("/api/ucsbdates", () => {
+    http.delete("/api/ucsbdiningcommonsmenuitem", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
