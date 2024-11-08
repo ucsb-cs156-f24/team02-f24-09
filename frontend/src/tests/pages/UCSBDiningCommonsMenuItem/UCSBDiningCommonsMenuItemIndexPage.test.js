@@ -64,7 +64,9 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(screen.getByText(/Create UCSBDiningCommonsMenuItem/),).toBeInTheDocument();
+      expect(
+        screen.getByText(/Create UCSBDiningCommonsMenuItem/),
+      ).toBeInTheDocument();
     });
     const button = screen.getByText(/Create UCSBDiningCommonsMenuItem/);
     expect(button).toHaveAttribute("href", "/ucsbdiningcommonsmenuitem/create");
@@ -77,7 +79,10 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
     const queryClient = new QueryClient();
     axiosMock
       .onGet("/api/ucsbdiningcommonsmenuitem/all")
-      .reply(200, ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems);
+      .reply(
+        200,
+        ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+      );
 
     // act
     render(
@@ -102,7 +107,9 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
     );
 
     // assert that the Create button is not present when user isn't an admin
-    expect(screen.queryByText(/Create UCSBDiningCommonsMenuItem/),).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Create UCSBDiningCommonsMenuItem/),
+    ).not.toBeInTheDocument();
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
@@ -143,10 +150,13 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
     const queryClient = new QueryClient();
     axiosMock
       .onGet("/api/ucsbdiningcommonsmenuitem/all")
-      .reply(200, ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems);
+      .reply(
+        200,
+        ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+      );
     axiosMock
       .onDelete("/api/ucsbdiningcommonsmenuitem")
-      .reply(200, "UCSBDiningCommonsMenuItem with id 1 was deleted",);
+      .reply(200, "UCSBDiningCommonsMenuItem with id 1 was deleted");
 
     // act
     render(
@@ -178,7 +188,9 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("UCSBDiningCommonsMenuItem with id 1 was deleted");
+      expect(mockToast).toBeCalledWith(
+        "UCSBDiningCommonsMenuItem with id 1 was deleted",
+      );
     });
   });
 });
