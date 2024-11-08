@@ -1,4 +1,4 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -10,31 +10,39 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mockToast = jest.fn();
-jest.mock('react-toastify', () => ({
-  toast: (...args) => mockToast(...args)
+jest.mock("react-toastify", () => ({
+  toast: (...args) => mockToast(...args),
 }));
 
 describe("UCSBOrganizationIndexPage tests", () => {
-  const axiosMock =new AxiosMockAdapter(axios);
-  
+  const axiosMock = new AxiosMockAdapter(axios);
+
   const testId = "UCSBOrganizationTable";
 
   const setupUserOnly = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
   };
 
   const setupAdminUser = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.adminUser);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
   };
 
   beforeEach(() => {
-    jest.spyOn(console, 'error');
+    jest.spyOn(console, "error");
     console.error.mockImplementation(() => null);
   });
 
@@ -53,7 +61,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
         <MemoryRouter>
           <UCSBOrganizationIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -66,30 +74,44 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
   test("renders three organizations correctly for regular user", async () => {
     setupUserOnly();
-    axiosMock.onGet("/api/ucsborganization/all").reply(200, ucsbOrganizationFixtures.threeOrganizations);
+    axiosMock
+      .onGet("/api/ucsborganization/all")
+      .reply(200, ucsbOrganizationFixtures.threeOrganizations);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <UCSBOrganizationIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("2");
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+      ).toHaveTextContent("2");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent("3");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-orgCode`)).toHaveTextContent("4");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
+    ).toHaveTextContent("3");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
+    ).toHaveTextContent("4");
 
     const createOrganizationButton = screen.queryByText("Create Organization");
     expect(createOrganizationButton).not.toBeInTheDocument();
 
     expect(screen.getByText("PIZZA HUNTERS")).toBeInTheDocument();
-    expect(screen.getByText("Pizza Hunting Society @ UCSB")).toBeInTheDocument();
+    expect(
+      screen.getByText("Pizza Hunting Society @ UCSB"),
+    ).toBeInTheDocument();
 
-    expect(screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`)).not.toBeInTheDocument();
-    expect(screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`)).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`),
+    ).not.toBeInTheDocument();
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
@@ -102,15 +124,17 @@ describe("UCSBOrganizationIndexPage tests", () => {
         <MemoryRouter>
           <UCSBOrganizationIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
       expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
     });
-    
+
     const errorMessage = console.error.mock.calls[0][0];
-    expect(errorMessage).toMatch("Error communicating with backend via GET on /api/ucsborganization/all");
+    expect(errorMessage).toMatch(
+      "Error communicating with backend via GET on /api/ucsborganization/all",
+    );
     restoreConsole();
   });
 });
