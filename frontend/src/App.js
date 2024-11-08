@@ -19,9 +19,6 @@ import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
-import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
-import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
-import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 
 function App() {
   const { data: currentUser } = useCurrentUser();
@@ -96,25 +93,6 @@ function App() {
               exact
               path="/placeholder/create"
               element={<PlaceholderCreatePage />}
-            />
-          </>
-        )}
-        {hasRole(currentUser, "ROLE_USER") && (
-          <>
-            <Route exact path="/articles" element={<ArticlesIndexPage />} />
-          </>
-        )}
-        {hasRole(currentUser, "ROLE_ADMIN") && (
-          <>
-            <Route
-              exact
-              path="/articles/edit/:id"
-              element={<ArticlesEditPage />}
-            />
-            <Route
-              exact
-              path="/articles/create"
-              element={<ArticlesCreatePage />}
             />
           </>
         )}
