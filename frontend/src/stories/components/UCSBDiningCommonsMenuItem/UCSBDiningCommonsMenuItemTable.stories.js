@@ -1,78 +1,41 @@
 import React from "react";
-import OurTable, { ButtonColumn } from "main/components/OurTable";
+import UCSBDiningCommonsMenuItemTable from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemTable";
+import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
+import { http, HttpResponse } from "msw";
 
-import { useBackendMutation } from "main/utils/useBackend";
-import {
-  cellToAxiosParamsDelete,
-  onDeleteSuccess,
-} from "main/utils/UCSBDiningCommonsMenuItem";
-import { useNavigate } from "react-router-dom";
-import { hasRole } from "main/utils/currentUser";
+export default {
+  title: "components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemTable",
+  component: UCSBDiningCommonsMenuItemTable,
+};
 
-export default function UCSBDiningCommonsMenuItemTable({ items, currentUser }) {
-  const navigate = useNavigate();
+const Template = (args) => {
+  return <UCSBDiningCommonsMenuItemTable {...args} />;
+};
 
-  const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.values.id}`);
-  };
+export const Empty = Template.bind({});
 
-  // Stryker disable all : hard to test for query caching
+Empty.args = {
+  items: [],
+};
 
-  const deleteMutation = useBackendMutation(
-    cellToAxiosParamsDelete,
-    { onSuccess: onDeleteSuccess },
-    ["/api/ucsbdiningcommonsmenuitem/all"],
-  );
-  // Stryker restore all
+export const ThreeItemsOrdinaryUser = Template.bind({});
 
-  // Stryker disable next-line all : TODO try to make a good test for this
-  const deleteCallback = async (cell) => {
-    deleteMutation.mutate(cell);
-  };
+ThreeItemsOrdinaryUser.args = {
+  items: ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+  currentUser: currentUserFixtures.userOnly,
+};
 
-  const columns = [
-    {
-      Header: "Id",
-      accessor: "id", // accessor is the "key" in the data
-    },
-    {
-      Header: "Dining Commons Code",
-      accessor: "diningCommonsCode",
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-    },
-    {
-      Header: "Station",
-      accessor: "station",
-    },
-  ];
+export const ThreeItemsAdminUser = Template.bind({});
+ThreeItemsAdminUser.args = {
+  items: ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+  currentUser: currentUserFixtures.adminUser,
+};
 
-  if (hasRole(currentUser, "ROLE_ADMIN")) {
-    columns.push(
-      ButtonColumn(
-        "Edit",
-        "primary",
-        editCallback,
-        "UCSBDiningCommonsMenuItemTable",
-      ),
-    );
-    columns.push(
-      ButtonColumn(
-        "Delete",
-        "danger",
-        deleteCallback,
-        "UCSBDiningCommonsMenuItemTable",
-      ),
-    );
-  }
-
-  return (
-    <OurTable
-      data={items}
-      columns={columns}
-      testid={"UCSBDiningCommonsMenuItemTable"}
-    />
-  );
-}
+ThreeItemsAdminUser.parameters = {
+  msw: [
+    http.delete("/api/ucsbdiningcommonsmenuitem", () => {
+      return HttpResponse.json({}, { status: 200 });
+    }),
+  ],
+};
