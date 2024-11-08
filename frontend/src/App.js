@@ -81,18 +81,15 @@ function App() {
             />
           </>
         )}
-        
+
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
               exact
-              path="/placeholder"
-              element={<PlaceholderIndexPage />}
-
               path="/ucsbdiningcommonsmenuitem"
               element={<UCSBDiningCommonsMenuItemIndexPage />}
             />
-             <Route
+            <Route
               exact
               path="/recommendationrequest"
               element={<RecommendationRequestIndexPage />}
