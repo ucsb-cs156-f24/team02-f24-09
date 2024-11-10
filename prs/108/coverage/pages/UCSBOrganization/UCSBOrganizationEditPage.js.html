@@ -132,23 +132,12 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,6 +151,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,6 +180,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,11 +188,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -207,59 +217,64 @@ import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizat
 import { Navigate } from "react-router-dom";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
+&nbsp;
 export default function <span class="fstat-no" title="function not covered" >UCSBOrganizationEditPage(</span>{ storybook = <span class="branch-0 cbranch-no" title="branch not covered" >false </span>}) {
-  let { id } = <span class="cstat-no" title="statement not covered" >useParams();</span>
+  const { id } = <span class="cstat-no" title="statement not covered" >useParams();</span>  // Changed to match the :id parameter in App.js route
+&nbsp;
   const {
     data: organization,
     _error,
     _status,
   } = <span class="cstat-no" title="statement not covered" >useBackend(</span>
-    // Stryker disable next-line all : don't test internal caching of React Query
-    [`/api/ucsborganization?orgCode=${id}`],
+    [`/api/ucsborganization?id=${id}`],
     {
-      // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
       method: "GET",
-      url: `/api/ucsborganization`,
+      url: "/api/ucsborganization",
       params: {
-        orgCode: id,
+        id: id,
       },
-    },
+    }
   );
+&nbsp;
   const objectToAxiosPutParams = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(o</span>rganization) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
     url: "/api/ucsborganization",
     method: "PUT",
     params: {
-      orgCode: organization.orgCode,
+      id: organization.orgCode,
     },
     data: {
-      orgCode: organization.orgCode,
       orgTranslationShort: organization.orgTranslationShort,
       orgTranslation: organization.orgTranslation,
       inactive: organization.inactive,
     },
   });
+&nbsp;
   const onSuccess = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(o</span>rganization) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    toast(</span>
-      `UCSBOrganization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort} orgTranslation: ${organization.orgTranslation} inactive: ${organization.inactive}`,
+      `Organization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}`
     );
   };
+&nbsp;
   const mutation = <span class="cstat-no" title="statement not covered" >useBackendMutation(</span>
     objectToAxiosPutParams,
     { onSuccess },
-    // Stryker disable next-line all : hard to set up test for caching
-    [`/api/ucsborganization?orgCode=${id}`],
+    ["/api/ucsborganization/all"]
   );
+&nbsp;
   const { isSuccess } = <span class="cstat-no" title="statement not covered" >mutation;</span>
+&nbsp;
   const onSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    mutation.mutate(data);</span>
   };
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  if (isSuccess &amp;&amp; !storybook) {</span>
 <span class="cstat-no" title="statement not covered" >    return &lt;Navigate to="/ucsborganization" /&gt;;</span>
   }
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;BasicLayout&gt;
       &lt;div className="pt-2"&gt;
-        &lt;h1&gt;Edit UCSB Organization&lt;/h1&gt;
+        &lt;h1&gt;Edit Organization&lt;/h1&gt;
         {organization &amp;&amp; (
           &lt;UCSBOrganizationForm
             submitAction={onSubmit}
@@ -277,7 +292,7 @@ export default function <span class="fstat-no" title="function not covered" >UCS
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-10T18:38:35.804Z
+                at 2024-11-10T23:13:04.139Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
