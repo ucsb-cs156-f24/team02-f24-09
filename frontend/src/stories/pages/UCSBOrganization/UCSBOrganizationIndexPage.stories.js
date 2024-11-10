@@ -4,7 +4,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
 import { http, HttpResponse } from "msw";
 
-import UCSBOrganizationIndexPage from "main/pages/UCSBOrganizations/UCSBOrganizationIndexPage";
+import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 
 export default {
   title: "pages/UCSBOrganizations/UCSBOrganizationIndexPage",
@@ -28,21 +28,6 @@ Empty.parameters = {
     }),
     http.get("/api/ucsborganization/all", () => {
       return HttpResponse.json([], { status: 200 });
-    }),
-  ],
-};
-
-export const OneItemOrdinaryUser = Template.bind({});
-OneItemOrdinaryUser.parameters = {
-  msw: [
-    http.get("/api/currentUser", () => {
-      return HttpResponse.json(apiCurrentUserFixtures.userOnly);
-    }),
-    http.get("/api/systemInfo", () => {
-      return HttpResponse.json(systemInfoFixtures.showingNeither);
-    }),
-    http.get("/api/ucsborganization/all", () => {
-      return HttpResponse.json(ucsbOrganizationFixtures.oneOrganization);
     }),
   ],
 };
