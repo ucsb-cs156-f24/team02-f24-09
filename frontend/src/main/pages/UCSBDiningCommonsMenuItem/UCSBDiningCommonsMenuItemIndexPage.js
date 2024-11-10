@@ -2,11 +2,11 @@ import React from "react";
 import { useBackend } from "main/utils/useBackend";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import HelpRequestTable from "main/components/HelpRequest/HelpRequestTable";
+import UCSBDiningCommonsMenuItemTable from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemTable";
 import { Button } from "react-bootstrap";
 import { useCurrentUser, hasRole } from "main/utils/currentUser";
 
-export default function HelpRequestIndexPage() {
+export default function UCSBDiningCommonsMenuItemIndexPage() {
   const currentUser = useCurrentUser();
 
   const createButton = () => {
@@ -14,23 +14,23 @@ export default function HelpRequestIndexPage() {
       return (
         <Button
           variant="primary"
-          href="/helprequests/create"
+          href="/ucsbdiningcommonsmenuitem/create"
           style={{ float: "right" }}
         >
-          Create Help Request
+          Create UCSBDiningCommonsMenuItem
         </Button>
       );
     }
   };
 
   const {
-    data: helpRequests,
+    data: items,
     error: _error,
     status: _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    ["/api/helprequests/all"],
-    { method: "GET", url: "/api/helprequests/all" },
+    ["/api/ucsbdiningcommonsmenuitem/all"],
+    { method: "GET", url: "/api/ucsbdiningcommonsmenuitem/all" },
     [],
   );
 
@@ -38,9 +38,9 @@ export default function HelpRequestIndexPage() {
     <BasicLayout>
       <div className="pt-2">
         {createButton()}
-        <h1>Help Requests</h1>
-        <HelpRequestTable
-          helpRequests={helpRequests}
+        <h1>UCSBDiningCommonsMenuItem</h1>
+        <UCSBDiningCommonsMenuItemTable
+          items={items}
           currentUser={currentUser}
         />
       </div>

@@ -1,49 +1,48 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import HelpRequestForm from "main/components/HelpRequest/HelpRequestForm";
+import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
 import { Navigate } from "react-router-dom";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function HelpRequestEditPage({ storybook = false }) {
+export default function UCSBDiningCommonsMenuItemEditPage({
+  storybook = false,
+}) {
   let { id } = useParams();
 
   const {
-    data: helpRequest,
+    data: ucsbDiningCommonsMenuItem,
     _error,
     _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    [`/api/helprequests?id=${id}`],
+    [`/api/ucsbdiningcommonsmenuitem?id=${id}`],
     {
       // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
       method: "GET",
-      url: `/api/helprequests`,
+      url: `/api/ucsbdiningcommonsmenuitem`,
       params: {
         id,
       },
     },
   );
 
-  const objectToAxiosPutParams = (helpRequest) => ({
-    url: "/api/helprequests",
+  const objectToAxiosPutParams = (ucsbDiningCommonsMenuItem) => ({
+    url: "/api/ucsbdiningcommonsmenuitem",
     method: "PUT",
     params: {
-      id: helpRequest.id,
+      id: ucsbDiningCommonsMenuItem.id,
     },
     data: {
-      requesterEmail: helpRequest.requesterEmail,
-      teamId: helpRequest.teamId,
-      tableOrBreakoutRoom: helpRequest.tableOrBreakoutRoom,
-      requestTime: helpRequest.requestTime,
-      explanation: helpRequest.explanation,
-      solved: helpRequest.solved,
+      diningCommonsCode: ucsbDiningCommonsMenuItem.diningCommonsCode,
+      name: ucsbDiningCommonsMenuItem.name,
+      station: ucsbDiningCommonsMenuItem.station,
     },
   });
 
-  const onSuccess = (helpRequest) => {
+  const onSuccess = (ucsbDiningCommonsMenuItem) => {
     toast(
-      `Help Request Updated - id: ${helpRequest.id} Team ID: ${helpRequest.teamId}`,
+      `UCSBDiningCommonsMenuItem Updated - id: ${ucsbDiningCommonsMenuItem.id} name: ${ucsbDiningCommonsMenuItem.name}`,
     );
   };
 
@@ -51,7 +50,7 @@ export default function HelpRequestEditPage({ storybook = false }) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/helprequests?id=${id}`],
+    [`/api/ucsbdiningcommonsmenuitem?id=${id}`],
   );
 
   const { isSuccess } = mutation;
@@ -61,16 +60,16 @@ export default function HelpRequestEditPage({ storybook = false }) {
   };
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/helprequests" />;
+    return <Navigate to="/ucsbdiningcommonsmenuitem" />;
   }
 
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Edit Help Request</h1>
-        {helpRequest && (
-          <HelpRequestForm
-            initialContents={helpRequest}
+        <h1>Edit UCSBDiningCommonsMenuItem</h1>
+        {ucsbDiningCommonsMenuItem && (
+          <UCSBDiningCommonsMenuItemForm
+            initialContents={ucsbDiningCommonsMenuItem}
             submitAction={onSubmit}
             buttonLabel="Update"
           />

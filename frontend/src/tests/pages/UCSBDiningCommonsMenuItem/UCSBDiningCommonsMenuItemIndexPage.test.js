@@ -1,14 +1,14 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
+import UCSBDiningCommonsMenuItemIndexPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemIndexPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
+import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
 
 const mockToast = jest.fn();
 jest.mock("react-toastify", () => {
@@ -20,10 +20,10 @@ jest.mock("react-toastify", () => {
   };
 });
 
-describe("HelpRequestIndexPage tests", () => {
+describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
-  const testId = "HelpRequestTable";
+  const testId = "UCSBDiningCommonsMenuItemTable";
 
   const setupUserOnly = () => {
     axiosMock.reset();
@@ -51,39 +51,44 @@ describe("HelpRequestIndexPage tests", () => {
     // arrange
     setupAdminUser();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/helprequests/all").reply(200, []);
+    axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, []);
 
     // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestIndexPage />
+          <UCSBDiningCommonsMenuItemIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     // assert
     await waitFor(() => {
-      expect(screen.getByText(/Create Help Request/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Create UCSBDiningCommonsMenuItem/),
+      ).toBeInTheDocument();
     });
-    const button = screen.getByText(/Create Help Request/);
-    expect(button).toHaveAttribute("href", "/helprequests/create");
+    const button = screen.getByText(/Create UCSBDiningCommonsMenuItem/);
+    expect(button).toHaveAttribute("href", "/ucsbdiningcommonsmenuitem/create");
     expect(button).toHaveAttribute("style", "float: right;");
   });
 
-  test("renders three helprequests correctly for regular user", async () => {
+  test("renders three items correctly for regular user", async () => {
     // arrange
     setupUserOnly();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/helprequests/all")
-      .reply(200, helpRequestFixtures.threeHelpRequests);
+      .onGet("/api/ucsbdiningcommonsmenuitem/all")
+      .reply(
+        200,
+        ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+      );
 
     // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestIndexPage />
+          <UCSBDiningCommonsMenuItemIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -102,21 +107,23 @@ describe("HelpRequestIndexPage tests", () => {
     );
 
     // assert that the Create button is not present when user isn't an admin
-    expect(screen.queryByText(/Create Help Request/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Create UCSBDiningCommonsMenuItem/),
+    ).not.toBeInTheDocument();
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
     // arrange
     setupUserOnly();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/helprequests/all").timeout();
+    axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").timeout();
     const restoreConsole = mockConsole();
 
     // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestIndexPage />
+          <UCSBDiningCommonsMenuItemIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -128,7 +135,7 @@ describe("HelpRequestIndexPage tests", () => {
 
     const errorMessage = console.error.mock.calls[0][0];
     expect(errorMessage).toMatch(
-      "Error communicating with backend via GET on /api/helprequests/all",
+      "Error communicating with backend via GET on /api/ucsbdiningcommonsmenuitem/all",
     );
     restoreConsole();
 
@@ -142,17 +149,20 @@ describe("HelpRequestIndexPage tests", () => {
     setupAdminUser();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/helprequests/all")
-      .reply(200, helpRequestFixtures.threeHelpRequests);
+      .onGet("/api/ucsbdiningcommonsmenuitem/all")
+      .reply(
+        200,
+        ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems,
+      );
     axiosMock
-      .onDelete("/api/helprequests")
-      .reply(200, "Help Request with id 1 was deleted");
+      .onDelete("/api/ucsbdiningcommonsmenuitem")
+      .reply(200, "UCSBDiningCommonsMenuItem with id 1 was deleted");
 
     // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestIndexPage />
+          <UCSBDiningCommonsMenuItemIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -178,7 +188,9 @@ describe("HelpRequestIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("Help Request with id 1 was deleted");
+      expect(mockToast).toBeCalledWith(
+        "UCSBDiningCommonsMenuItem with id 1 was deleted",
+      );
     });
   });
 });

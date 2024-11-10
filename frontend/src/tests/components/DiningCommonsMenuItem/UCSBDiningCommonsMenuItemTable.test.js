@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
-import HelpRequestTable from "main/components/HelpRequest/HelpRequestTable";
+import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
+import UCSBDiningCommonsMenuItemTable from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -23,33 +23,19 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <UCSBDiningCommonsMenuItemTable
+            items={
+              ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = [
-      "id",
-      "Requester Email",
-      "Table or Breakout Room",
-      "Team Id",
-      "Request Time",
-      "Explanation",
-      "Solved",
-    ];
-    const expectedFields = [
-      "id",
-      "requesterEmail",
-      "tableOrBreakoutRoom",
-      "teamId",
-      "requestTime",
-      "explanation",
-      "solved",
-    ];
-    const testId = "HelpRequestTable";
+    const expectedHeaders = ["Id", "Dining Commons Code", "Name", "Station"];
+    const expectedFields = ["id", "diningCommonsCode", "name", "station"];
+    const testId = "UCSBDiningCommonsMenuItemTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -67,7 +53,6 @@ describe("UserTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
-    expect(screen.getByText(/true/)).toBeInTheDocument();
 
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -86,33 +71,19 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <UCSBDiningCommonsMenuItemTable
+            items={
+              ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = [
-      "id",
-      "Requester Email",
-      "Table or Breakout Room",
-      "Team Id",
-      "Request Time",
-      "Explanation",
-      "Solved",
-    ];
-    const expectedFields = [
-      "id",
-      "requesterEmail",
-      "tableOrBreakoutRoom",
-      "teamId",
-      "requestTime",
-      "explanation",
-      "solved",
-    ];
-    const testId = "HelpRequestTable";
+    const expectedHeaders = ["Id", "Dining Commons Code", "Name", "Station"];
+    const expectedFields = ["id", "diningCommonsCode", "name", "station"];
+    const testId = "UCSBDiningCommonsMenuItemTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -142,8 +113,6 @@ describe("UserTable tests", () => {
     );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
-
-    expect(screen.getByText(/true/)).toBeInTheDocument();
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
@@ -152,8 +121,10 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <UCSBDiningCommonsMenuItemTable
+            items={
+              ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -162,19 +133,21 @@ describe("UserTable tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`HelpRequestTable-cell-row-0-col-id`),
+        screen.getByTestId(`UCSBDiningCommonsMenuItemTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
 
     const editButton = screen.getByTestId(
-      `HelpRequestTable-cell-row-0-col-Edit-button`,
+      `UCSBDiningCommonsMenuItemTable-cell-row-0-col-Edit-button`,
     );
     expect(editButton).toBeInTheDocument();
 
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/helpRequests/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/ucsbdiningcommonsmenuitem/edit/1",
+      ),
     );
   });
 
@@ -184,15 +157,17 @@ describe("UserTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/helprequests")
-      .reply(200, { message: "Help Request deleted" });
+      .onDelete("/api/ucsbdiningcommonsmenuitem")
+      .reply(200, { message: "Menu Item deleted" });
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <UCSBDiningCommonsMenuItemTable
+            items={
+              ucsbDiningCommonsMenuItemFixtures.threeucsbDiningCommonsMenuItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -203,12 +178,12 @@ describe("UserTable tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`HelpRequestTable-cell-row-0-col-id`),
+        screen.getByTestId(`UCSBDiningCommonsMenuItemTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
 
     const deleteButton = screen.getByTestId(
-      `HelpRequestTable-cell-row-0-col-Delete-button`,
+      `UCSBDiningCommonsMenuItemTable-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
 
