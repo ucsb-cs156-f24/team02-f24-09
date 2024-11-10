@@ -2,33 +2,31 @@ import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function OrganizationForm({
+function UCSBOrganizationForm({
   initialContents,
   submitAction,
   buttonLabel = "Create",
 }) {
-  // Stryker disable all
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {} });
-  // Stryker restore all
 
   const navigate = useNavigate();
 
-  const testIdPrefix = "OrganizationForm";
+  const testIdPrefix = "UCSBOrganizationForm";
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="orgCode">orgCode</Form.Label>
+        <Form.Label htmlFor="orgCode">Organization Code</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "orgCode"}
+          data-testid={testIdPrefix + "-orgCode"}
           id="orgCode"
           type="text"
           {...register("orgCode", {
-            required: "orgCode is required.",
+            required: "Organization Code is required.",
             maxLength: {
               value: 10,
               message: "Max length 10 characters",
@@ -42,16 +40,14 @@ function OrganizationForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="OrgTranslationShort">
-          OrgTranslationShort
-        </Form.Label>
+        <Form.Label htmlFor="orgTranslationShort">Short Translation</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-OrgTranslationShort"}
-          id="OrgTranslationShort"
+          data-testid={testIdPrefix + "-orgTranslationShort"}
+          id="orgTranslationShort"
           type="text"
           isInvalid={Boolean(errors.orgTranslationShort)}
           {...register("orgTranslationShort", {
-            required: "OrgTranslationShort is required.",
+            required: "Short Translation is required.",
             maxLength: {
               value: 30,
               message: "Max length 30 characters",
@@ -64,14 +60,16 @@ function OrganizationForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="OrgTranslation">OrgTranslation</Form.Label>
+        <Form.Label htmlFor="orgTranslation">
+          Organization Translation
+        </Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-OrgTranslation"}
-          id="OrgTranslation"
+          data-testid={testIdPrefix + "-orgTranslation"}
+          id="orgTranslation"
           type="text"
           isInvalid={Boolean(errors.orgTranslation)}
           {...register("orgTranslation", {
-            required: "OrgTranslation is required.",
+            required: "Organization Translation is required.",
             maxLength: {
               value: 30,
               message: "Max length 30 characters",
@@ -107,4 +105,4 @@ function OrganizationForm({
   );
 }
 
-export default OrganizationForm;
+export default UCSBOrganizationForm;

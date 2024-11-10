@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import OrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
+import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
 import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
 
 const mockedNavigate = jest.fn();
@@ -10,24 +10,24 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedNavigate,
 }));
 
-describe("OrganizationForm tests", () => {
-  const testId = "OrganizationForm";
+describe("UCSBOrganizationForm tests", () => {
+  const testId = "UCSBOrganizationForm";
 
   test("renders correctly when passing in initialContents", async () => {
     render(
       <Router>
-        <OrganizationForm
+        <UCSBOrganizationForm
           initialContents={ucsbOrganizationFixtures.oneOrganization[0]}
         />
       </Router>,
     );
 
-    expect(await screen.findByTestId(`${testId}orgCode`)).toBeInTheDocument();
-    expect(screen.getByTestId(`${testId}orgCode`)).toHaveValue("1");
-    expect(screen.getByTestId(`${testId}-OrgTranslationShort`)).toHaveValue(
+    expect(await screen.findByTestId(`${testId}-orgCode`)).toBeInTheDocument();
+    expect(screen.getByTestId(`${testId}-orgCode`)).toHaveValue("1");
+    expect(screen.getByTestId(`${testId}-orgTranslationShort`)).toHaveValue(
       "NAPPING LEAGUE",
     );
-    expect(screen.getByTestId(`${testId}-OrgTranslation`)).toHaveValue(
+    expect(screen.getByTestId(`${testId}-orgTranslation`)).toHaveValue(
       "Professional Napping League at UCSB",
     );
     const inactive = screen.getByTestId(`${testId}-inactive`);
@@ -38,7 +38,7 @@ describe("OrganizationForm tests", () => {
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>
-        <OrganizationForm />
+        <UCSBOrganizationForm />
       </Router>,
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("OrganizationForm tests", () => {
     const mockSubmitAction = jest.fn();
     render(
       <Router>
-        <OrganizationForm submitAction={mockSubmitAction} />
+        <UCSBOrganizationForm submitAction={mockSubmitAction} />
       </Router>,
     );
 
@@ -61,17 +61,19 @@ describe("OrganizationForm tests", () => {
     const submitButton = screen.getByTestId(`${testId}-submit`);
     fireEvent.click(submitButton);
 
-    await screen.findByText(/orgCode is required./);
+    await screen.findByText(/Organization Code is required./);
     expect(
-      screen.getByText(/OrgTranslationShort is required./),
+      screen.getByText(/Short Translation is required./),
     ).toBeInTheDocument();
-    expect(screen.getByText(/OrgTranslation is required./)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Organization Translation is required./),
+    ).toBeInTheDocument();
 
-    const orgCodeInput = screen.getByTestId(`${testId}orgCode`);
+    const orgCodeInput = screen.getByTestId(`${testId}-orgCode`);
     const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-OrgTranslationShort`,
+      `${testId}-orgTranslationShort`,
     );
-    const orgTranslationInput = screen.getByTestId(`${testId}-OrgTranslation`);
+    const orgTranslationInput = screen.getByTestId(`${testId}-orgTranslation`);
 
     fireEvent.change(orgCodeInput, { target: { value: "a".repeat(11) } });
     fireEvent.change(orgTranslationShortInput, {
@@ -90,11 +92,11 @@ describe("OrganizationForm tests", () => {
   test("renders with default buttonLabel correctly", async () => {
     render(
       <Router>
-        <OrganizationForm />
+        <UCSBOrganizationForm />
       </Router>,
     );
 
-    const submitButton = await screen.findByTestId("OrganizationForm-submit");
+    const submitButton = await screen.findByTestId(`${testId}-submit`);
     expect(submitButton).toHaveTextContent("Create");
   });
 });
