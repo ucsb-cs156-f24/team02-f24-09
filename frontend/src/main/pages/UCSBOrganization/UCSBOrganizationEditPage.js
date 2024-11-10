@@ -22,16 +22,21 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
       params: {
         id: orgCode
       }
-    },
+    }
   );
 
-  const objectToAxiosPutParams = (organization) => ({
+  const objectToAxiosParams = (organization) => ({
     url: "/api/ucsborganization",
     method: "PUT",
     params: {
       id: orgCode
     },
-    data: organization
+    data: {
+      orgCode: organization.orgCode,
+      orgTranslationShort: organization.orgTranslationShort,
+      orgTranslation: organization.orgTranslation,
+      inactive: organization.inactive
+    }
   });
 
   const onSuccess = (organization) => {
@@ -41,10 +46,10 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
   };
 
   const mutation = useBackendMutation(
-    objectToAxiosPutParams,
+    objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/ucsborganization?id=${orgCode}`]
+    ["/api/ucsborganization/all"]
   );
 
   const { isSuccess } = mutation;
