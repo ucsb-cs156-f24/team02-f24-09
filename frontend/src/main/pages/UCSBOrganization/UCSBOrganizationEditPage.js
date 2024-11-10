@@ -1,31 +1,31 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import UCSBOrganizationsForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
+import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
 import { Navigate } from "react-router-dom";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function UCSBOrganizationsEditPage({ storybook = false }) {
+export default function UCSBOrganizationEditPage({ storybook = false }) {
   // Extract the organization ID from the route params
-  let { id } = useParams();
+  let { orgCode } = useParams();
 
   // Fetch organization data by ID
   const {
-    data: ucsbOrganizations,
+    data: ucsbOrganization,
     _error,
     _status,
   } = useBackend(
-    [`/api/ucsborganizations?id=${id}`], // Cache key
+    [`/api/ucsborganization?id=${orgCode}`], // Cache key
     {
       method: "GET",
-      url: `/api/ucsborganizations`,
-      params: { id }, // Send the 'id' as a query parameter
+      url: `/api/ucsborganization`,
+      params: {id: orgCode }, // Send the 'id' as a query parameter
     }
   );
 
   // Define the PUT request for updating an organization
   const objectToAxiosPutParams = (organization) => ({
-    url: "/api/ucsborganizations",
+    url: "/api/ucsborganization",
     method: "PUT",
     params: {
       id: organization.id, // Pass the organization ID
@@ -41,7 +41,7 @@ export default function UCSBOrganizationsEditPage({ storybook = false }) {
   // Handle success after updating the organization
   const onSuccess = (updatedOrganization) => {
     toast(
-      `Organization Updated - id: ${updatedOrganization.id}, orgCode: ${updatedOrganization.orgCode}`
+      `Organization Updated - id: ${updatedOrganization.orgaCode}}`
     );
   };
 
@@ -49,7 +49,7 @@ export default function UCSBOrganizationsEditPage({ storybook = false }) {
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
-    [`/api/ucsborganizations?id=${id}`] // Cache invalidation key
+    [`/api/ucsborganization?id=${orgCode}`] // Cache invalidation key
   );
 
   const { isSuccess } = mutation;
@@ -61,7 +61,7 @@ export default function UCSBOrganizationsEditPage({ storybook = false }) {
 
   // Redirect to the main organizations page after successful update
   if (isSuccess && !storybook) {
-    return <Navigate to="/ucsborganizations" />;
+    return <Navigate to="/ucsborganization" />;
   }
 
   // Render the edit page
@@ -69,11 +69,11 @@ export default function UCSBOrganizationsEditPage({ storybook = false }) {
     <BasicLayout>
       <div className="pt-2">
         <h1>Edit UCSB Organization</h1>
-        {ucsbOrganizations && (
-          <UCSBOrganizationsForm
+        {ucsbOrganization && (
+          <UCSBOrganizationForm
             submitAction={onSubmit}
             buttonLabel="Update"
-            initialContents={ucsbOrganizations}
+            initialContents={ucsbOrganization}
           />
         )}
       </div>
