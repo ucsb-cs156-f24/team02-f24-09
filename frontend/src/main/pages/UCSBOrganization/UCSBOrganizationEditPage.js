@@ -14,14 +14,14 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
     _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    [`/api/ucsborganization?id=${orgCode}`],
+    [`/api/ucsborganization`],
     {
       // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
       method: "GET",
       url: "/api/ucsborganization",
       params: {
-        id: orgCode  // Matches the @RequestParam in your controller
-      },
+        id: orgCode
+      }
     },
   );
 
@@ -29,14 +29,9 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
     url: "/api/ucsborganization",
     method: "PUT",
     params: {
-      id: organization.orgCode  // Changed to match controller's @RequestParam
+      id: orgCode
     },
-    data: {
-      orgCode: organization.orgCode,
-      orgTranslationShort: organization.orgTranslationShort,
-      orgTranslation: organization.orgTranslation,
-      inactive: organization.inactive,
-    },
+    data: organization
   });
 
   const onSuccess = (organization) => {
