@@ -1,5 +1,4 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
-import HelpRequestCreatePage from "main/pages/HelpRequest/HelpRequestCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,6 +6,7 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 
 const mockToast = jest.fn();
 jest.mock("react-toastify", () => {
@@ -31,7 +31,7 @@ jest.mock("react-router-dom", () => {
   };
 });
 
-describe("HelpRequestCreatePage tests", () => {
+describe("ArticlesCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
@@ -50,86 +50,73 @@ describe("HelpRequestCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("HelpRequestForm-solved")).toBeInTheDocument();
+      expect(screen.getByTestId("ArticlesForm-title")).toBeInTheDocument();
     });
   });
 
   test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
     const queryClient = new QueryClient();
-    const helpRequest = {
-      id: 1,
-      requesterEmail: "tester1@hotmail.com",
-      teamId: "01",
-      tableOrBreakoutRoom: "table",
-      requestTime: "2024-11-06T22:22",
-      explanation: "Dokku issue",
-      solved: false,
+    const article = {
+      id: 17,
+      title: "test_title",
+      email: "test_email",
+      explanation: "test_explanation",
+      url: "test_url",
+      dateAdded: "2024-11-05T10:10:10",
     };
 
-    axiosMock.onPost("/api/helprequests/post").reply(202, helpRequest);
+    axiosMock.onPost("/api/articles/post").reply(202, article);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("HelpRequestForm-solved")).toBeInTheDocument();
+      expect(screen.getByTestId("ArticlesForm-title")).toBeInTheDocument();
     });
 
-    const requesterEmailField = screen.getByTestId(
-      "HelpRequestForm-requesterEmail",
-    );
-    const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const tableOrBreakoutRoomField = screen.getByTestId(
-      "HelpRequestForm-tableOrBreakoutRoom",
-    );
-    const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
-    const explanationField = screen.getByTestId("HelpRequestForm-explanation");
-    const solvedField = screen.getByTestId("HelpRequestForm-solved");
+    const title = screen.getByTestId("ArticlesForm-title");
+    const url = screen.getByTestId("ArticlesForm-url");
+    const explanation = screen.getByTestId("ArticlesForm-explanation");
+    const email = screen.getByTestId("ArticlesForm-email");
+    const dateAdded = screen.getByTestId("ArticlesForm-dateAdded");
+    const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(requesterEmailField, {
-      target: { value: "tester1@hotmail.com" },
+    fireEvent.change(title, { target: { value: "test_title_2" } });
+    fireEvent.change(url, { target: { value: "test_url_2" } });
+    fireEvent.change(explanation, { target: { value: "test_explanation_2" } });
+    fireEvent.change(email, { target: { value: "test_email_2" } });
+    fireEvent.change(dateAdded, {
+      target: { value: "2022-02-02T00:00" },
     });
-    fireEvent.change(teamIdField, { target: { value: "01" } });
-    fireEvent.change(tableOrBreakoutRoomField, {
-      target: { value: "table" },
-    });
-    fireEvent.change(requestTimeField, {
-      target: { value: "2024-11-06T22:22" },
-    });
-    fireEvent.change(explanationField, { target: { value: "Dokku issue" } });
 
-    fireEvent.click(solvedField);
-    fireEvent.click(solvedField);
-
-    const submitButton = screen.getByTestId("HelpRequestForm-submit");
+    expect(submitButton).toBeInTheDocument();
 
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      requesterEmail: "tester1@hotmail.com",
-      teamId: "01",
-      tableOrBreakoutRoom: "table",
-      requestTime: "2024-11-06T22:22",
-      explanation: "Dokku issue",
-      solved: false,
+      dateAdded: "2022-02-02T00:00",
+      title: "test_title_2",
+      url: "test_url_2",
+      email: "test_email_2",
+      explanation: "test_explanation_2",
     });
 
     expect(mockToast).toBeCalledWith(
-      "New helpRequest Created - id: 1 team: 01",
+      "New article Created - id: 17 title: test_title",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/helprequests" });
+    expect(mockNavigate).toBeCalledWith({ to: "/articles" });
   });
 });

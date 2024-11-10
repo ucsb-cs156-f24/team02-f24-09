@@ -1,7 +1,7 @@
 import {
   onDeleteSuccess,
   cellToAxiosParamsDelete,
-} from "main/utils/helpRequestUtils";
+} from "main/utils/articleUtils";
 import mockConsole from "jest-mock-console";
 
 const mockToast = jest.fn();
@@ -14,20 +14,20 @@ jest.mock("react-toastify", () => {
   };
 });
 
-describe("helpRequestUtils", () => {
+describe("articlesUtils", () => {
   describe("onDeleteSuccess", () => {
     test("It puts the message on console.log and in a toast", () => {
       // arrange
       const restoreConsole = mockConsole();
 
       // act
-      onDeleteSuccess("abc");
+      onDeleteSuccess("Article deleted successfully");
 
       // assert
-      expect(mockToast).toHaveBeenCalledWith("abc");
+      expect(mockToast).toHaveBeenCalledWith("Article deleted successfully");
       expect(console.log).toHaveBeenCalled();
       const message = console.log.mock.calls[0][0];
-      expect(message).toMatch("abc");
+      expect(message).toMatch("Article deleted successfully");
 
       restoreConsole();
     });
@@ -35,16 +35,16 @@ describe("helpRequestUtils", () => {
   describe("cellToAxiosParamsDelete", () => {
     test("It returns the correct params", () => {
       // arrange
-      const cell = { row: { values: { id: 17 } } };
+      const cell = { row: { values: { id: 42 } } };
 
       // act
       const result = cellToAxiosParamsDelete(cell);
 
       // assert
       expect(result).toEqual({
-        url: "/api/helprequests",
+        url: "/api/articles",
         method: "DELETE",
-        params: { id: 17 },
+        params: { id: 42 },
       });
     });
   });
