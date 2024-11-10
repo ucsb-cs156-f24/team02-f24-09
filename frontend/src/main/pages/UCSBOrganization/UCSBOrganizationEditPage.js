@@ -1,34 +1,35 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
+import UCSBOrganizationtForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
 import { Navigate } from "react-router-dom";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function UCSBOrganizationEditPage({ storybook = false }) {
-  // Extract the organization ID from the route params
-  let { orgCode } = useParams();
+  let { id } = useParams();
 
-  // Fetch organization data by ID
   const {
-    data: ucsbOrganization,
+    data: organization,
     _error,
     _status,
   } = useBackend(
-    [`/api/ucsborganization?id=${orgCode}`], // Cache key
+    // Stryker disable next-line all : don't test internal caching of React Query
+    [`/api/ucsborganizations?orgCode=${id}`],
     {
+      // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
       method: "GET",
-      url: `/api/ucsborganization`,
-      params: {id: orgCode }, // Send the 'id' as a query parameter
-    }
+      url: `/api/ucsborganizations`,
+      params: {
+        orgCode: id,
+      },
+    },
   );
 
-  // Define the PUT request for updating an organization
   const objectToAxiosPutParams = (organization) => ({
-    url: "/api/ucsborganization",
+    url: "/api/ucsborganizations",
     method: "PUT",
     params: {
-      id: organization.id, // Pass the organization ID
+      orgCode: organization.orgCode,
     },
     data: {
       orgCode: organization.orgCode,
@@ -38,46 +39,41 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
     },
   });
 
-  // Handle success after updating the organization
-  const onSuccess = (updatedOrganization) => {
+  const onSuccess = (organization) => {
     toast(
-      `Organization Updated - id: ${updatedOrganization.orgaCode}}`
+      `UCSBOrganization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort} orgTranslation: ${organization.orgTranslation} inactive: ${organization.inactive}`,
     );
   };
 
-  // Set up mutation for updating the organization
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
-    [`/api/ucsborganization?id=${orgCode}`] // Cache invalidation key
+    // Stryker disable next-line all : hard to set up test for caching
+    [`/api/ucsborganizations?orgCode=${id}`],
   );
 
   const { isSuccess } = mutation;
 
-  // Submit handler for the form
   const onSubmit = async (data) => {
     mutation.mutate(data);
   };
 
-  // Redirect to the main organizations page after successful update
   if (isSuccess && !storybook) {
-    return <Navigate to="/ucsborganization" />;
+    return <Navigate to="/ucsborganizations" />;
   }
 
-  // Render the edit page
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Edit UCSB Organization</h1>
-        {ucsbOrganization && (
-          <UCSBOrganizationForm
+        {organization && (
+          <UCSBOrganizationtForm
             submitAction={onSubmit}
-            buttonLabel="Update"
-            initialContents={ucsbOrganization}
+            buttonLabel={"Update"}
+            initialContents={organization}
           />
         )}
       </div>
     </BasicLayout>
   );
 }
-
