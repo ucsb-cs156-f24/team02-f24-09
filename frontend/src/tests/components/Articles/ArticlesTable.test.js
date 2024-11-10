@@ -1,11 +1,11 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
-import HelpRequestTable from "main/components/HelpRequest/HelpRequestTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import ArticlesTable from "main/components/Articles/ArticlesTable";
+import { articlesFixtures } from "fixtures/articlesFixtures";
 
 const mockedNavigate = jest.fn();
 
@@ -23,8 +23,8 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <ArticlesTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -33,23 +33,21 @@ describe("UserTable tests", () => {
 
     const expectedHeaders = [
       "id",
-      "Requester Email",
-      "Table or Breakout Room",
-      "Team Id",
-      "Request Time",
+      "Title",
+      "Url",
       "Explanation",
-      "Solved",
+      "Email",
+      "DateAdded",
     ];
     const expectedFields = [
       "id",
-      "requesterEmail",
-      "tableOrBreakoutRoom",
-      "teamId",
-      "requestTime",
+      "title",
+      "url",
       "explanation",
-      "solved",
+      "email",
+      "dateAdded",
     ];
-    const testId = "HelpRequestTable";
+    const testId = "ArticlesTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -67,7 +65,6 @@ describe("UserTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
-    expect(screen.getByText(/true/)).toBeInTheDocument();
 
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -86,8 +83,8 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <ArticlesTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -96,23 +93,21 @@ describe("UserTable tests", () => {
 
     const expectedHeaders = [
       "id",
-      "Requester Email",
-      "Table or Breakout Room",
-      "Team Id",
-      "Request Time",
+      "Title",
+      "Url",
       "Explanation",
-      "Solved",
+      "Email",
+      "DateAdded",
     ];
     const expectedFields = [
       "id",
-      "requesterEmail",
-      "tableOrBreakoutRoom",
-      "teamId",
-      "requestTime",
+      "title",
+      "url",
       "explanation",
-      "solved",
+      "email",
+      "dateAdded",
     ];
-    const testId = "HelpRequestTable";
+    const testId = "ArticlesTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -142,8 +137,6 @@ describe("UserTable tests", () => {
     );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
-
-    expect(screen.getByText(/true/)).toBeInTheDocument();
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
@@ -152,8 +145,8 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <ArticlesTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -162,19 +155,19 @@ describe("UserTable tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`HelpRequestTable-cell-row-0-col-id`),
+        screen.getByTestId(`ArticlesTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
 
     const editButton = screen.getByTestId(
-      `HelpRequestTable-cell-row-0-col-Edit-button`,
+      `ArticlesTable-cell-row-0-col-Edit-button`,
     );
     expect(editButton).toBeInTheDocument();
 
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/helpRequests/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith("/articles/edit/1"),
     );
   });
 
@@ -184,15 +177,15 @@ describe("UserTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/helprequests")
-      .reply(200, { message: "Help Request deleted" });
+      .onDelete("/api/articles")
+      .reply(200, { message: "Article deleted" });
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable
-            helpRequests={helpRequestFixtures.threeHelpRequests}
+          <ArticlesTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -203,12 +196,12 @@ describe("UserTable tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`HelpRequestTable-cell-row-0-col-id`),
+        screen.getByTestId(`ArticlesTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
 
     const deleteButton = screen.getByTestId(
-      `HelpRequestTable-cell-row-0-col-Delete-button`,
+      `ArticlesTable-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
 
