@@ -77,7 +77,7 @@ ThreeItemsAdminUser.parameters = {
     http.delete("/api/ucsborganization", () => {
       return HttpResponse.json(
         { message: "Organization deleted successfully" },
-        { status: 200 }
+        { status: 200 },
       );
     }),
   ],
