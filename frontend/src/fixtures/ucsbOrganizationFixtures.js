@@ -1,8 +1,7 @@
 const ucsbOrganizationFixtures = {
   oneOrganization: [
     {
-      id: 1,
-      orgCode: "NPL",
+      orgCode: "1",
       orgTranslationShort: "NAPPING LEAGUE",
       orgTranslation: "Professional Napping League at UCSB",
       inactive: true,
@@ -11,24 +10,21 @@ const ucsbOrganizationFixtures = {
 
   threeOrganizations: [
     {
-      id: 2,
-      orgCode: "PIZ",
+      orgCode: "2",
       orgTranslationShort: "PIZZA HUNTERS",
       orgTranslation: "Pizza Hunting Society @ UCSB",
       inactive: false,
     },
 
     {
-      id: 3,
-      orgCode: "UFO",
+      orgCode: "3",
       orgTranslationShort: "UFO WATCHERS",
       orgTranslation: "Student UFO Spotting Association",
       inactive: false,
     },
 
     {
-      id: 4,
-      orgCode: "SQU",
+      orgCode: "4",
       orgTranslationShort: "SQUIRREL CLUB",
       orgTranslation: "Campus Squirrel Appreciation Club",
       inactive: true,
