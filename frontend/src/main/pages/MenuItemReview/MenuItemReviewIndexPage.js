@@ -40,7 +40,6 @@ export default function MenuItemReviewIndexPage() {
         {createButton()}
         <h1>MenuItemReview</h1>
         <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
-
       </div>
     </BasicLayout>
   );

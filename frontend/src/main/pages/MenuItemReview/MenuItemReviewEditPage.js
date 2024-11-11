@@ -74,7 +74,6 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
             buttonLabel="Update"
           />
         )}
-
       </div>
     </BasicLayout>
   );
