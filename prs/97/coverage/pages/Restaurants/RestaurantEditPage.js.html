@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -178,7 +178,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -191,14 +191,14 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -240,7 +240,7 @@ export default function RestaurantEditPage({ storybook = false }) {
     },
   );
 &nbsp;
-  const objectToAxiosPutParams = (restaurant) =&gt; ({
+  const objectToAxiosPutParams = <span class="fstat-no" title="function not covered" >(r</span>estaurant) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
     url: "/api/restaurants",
     method: "PUT",
     params: {
@@ -252,8 +252,8 @@ export default function RestaurantEditPage({ storybook = false }) {
     },
   });
 &nbsp;
-  const onSuccess = (restaurant) =&gt; {
-    toast(`Restaurant Updated - id: ${restaurant.id} name: ${restaurant.name}`);
+  const onSuccess = <span class="fstat-no" title="function not covered" >(r</span>estaurant) =&gt; {
+<span class="cstat-no" title="statement not covered" >    toast(`Restaurant Updated - id: ${restaurant.id} name: ${restaurant.name}`);</span>
   };
 &nbsp;
   const mutation = useBackendMutation(
@@ -265,12 +265,12 @@ export default function RestaurantEditPage({ storybook = false }) {
 &nbsp;
   const { isSuccess } = mutation;
 &nbsp;
-  const onSubmit = async (data) =&gt; {
-    mutation.mutate(data);
+  const onSubmit = <span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {
+<span class="cstat-no" title="statement not covered" >    mutation.mutate(data);</span>
   };
 &nbsp;
-  if (isSuccess &amp;&amp; !storybook) {
-    return &lt;Navigate to="/restaurants" /&gt;;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (isSuccess &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!storybook)</span> {
+<span class="cstat-no" title="statement not covered" >    return &lt;Navigate to="/restaurants" /&gt;;</span>
   }
 &nbsp;
   return (
@@ -278,7 +278,7 @@ export default function RestaurantEditPage({ storybook = false }) {
       &lt;div className="pt-2"&gt;
         &lt;h1&gt;Edit Restaurant&lt;/h1&gt;
         {restaurant &amp;&amp; (
-          &lt;RestaurantForm
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;RestaurantForm</span>
             submitAction={onSubmit}
             buttonLabel={"Update"}
             initialContents={restaurant}
@@ -295,7 +295,7 @@ export default function RestaurantEditPage({ storybook = false }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-08T01:23:09.103Z
+                at 2024-11-11T02:50:17.127Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
