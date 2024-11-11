@@ -7,7 +7,14 @@ const ucsbOrganizationFixtures = {
       inactive: true,
     },
   ],
-
+  oneeOrganization: [
+    {
+      orgCode: "SKY",
+      orgTranslationShort: "Sky-diving club",
+      orgTranslation: "UCSB Sky-diving club",
+      inactive: "true",
+    },
+  ],
   threeOrganizations: [
     {
       orgCode: "2",

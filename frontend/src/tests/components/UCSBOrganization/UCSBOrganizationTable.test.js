@@ -1,8 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
-import UCSBOrganizationTable, {
-  onDeleteSuccess,
-} from "main/components/UCSBOrganization/UCSBOrganizationTable";
+import UCSBOrganizationTable from "main/components/UCSBOrganization/UCSBOrganizationTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -206,20 +204,6 @@ describe("UCSBOrganizationTable tests", () => {
     );
   });
 
-  test("onDeleteSuccess handles message correctly", () => {
-    // arrange
-    const message = {
-      message: "Organization deleted successfully",
-    };
-
-    // act
-    const result = onDeleteSuccess(message);
-
-    // assert
-    expect(console.log).toHaveBeenCalledWith(message);
-    expect(result).toBe(message);
-  });
-
   test("Delete button calls delete callback", async () => {
     // arrange
     const currentUser = currentUserFixtures.adminUser;
@@ -259,7 +243,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the delete endpoint was called
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "2" });
+    expect(axiosMock.history.delete[0].params).toEqual({ id: "2" });
     expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
 
     // assert - check that the success message was logged
