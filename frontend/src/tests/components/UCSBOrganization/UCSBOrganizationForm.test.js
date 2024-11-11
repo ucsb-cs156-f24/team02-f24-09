@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
 import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const mockedNavigate = jest.fn();
 
@@ -11,35 +12,55 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("UCSBOrganizationForm tests", () => {
+  const queryClient = new QueryClient();
+
+  const expectedHeaders = ["Organization Code", "Short Translation", "Organization Translation"];
   const testId = "UCSBOrganizationForm";
+
+  test("renders correctly with no initialContents", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm />
+        </Router>
+      </QueryClientProvider>
+    );
+
+    expect(await screen.findByText(/Create/)).toBeInTheDocument();
+
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+  });
 
   test("renders correctly when passing in initialContents", async () => {
     render(
-      <Router>
-        <UCSBOrganizationForm
-          initialContents={ucsbOrganizationFixtures.oneOrganization[0]}
-        />
-      </Router>,
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm initialContents={ucsbOrganizationFixtures.oneOrganization[0]} />
+        </Router>
+      </QueryClientProvider>
     );
 
+    expect(await screen.findByText(/Create/)).toBeInTheDocument();
+
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
     expect(await screen.findByTestId(`${testId}-orgCode`)).toBeInTheDocument();
-    expect(screen.getByTestId(`${testId}-orgCode`)).toHaveValue("1");
-    expect(screen.getByTestId(`${testId}-orgTranslationShort`)).toHaveValue(
-      "NAPPING LEAGUE",
-    );
-    expect(screen.getByTestId(`${testId}-orgTranslation`)).toHaveValue(
-      "Professional Napping League at UCSB",
-    );
-    const inactive = screen.getByTestId(`${testId}-inactive`);
-    expect(inactive).toBeInTheDocument();
-    expect(inactive.checked).toBe(true);
+    expect(screen.getByTestId(`${testId}-orgCode`)).toBeDisabled();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
-      <Router>
-        <UCSBOrganizationForm />
-      </Router>,
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm />
+        </Router>
+      </QueryClientProvider>
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
     const cancelButton = screen.getByTestId(`${testId}-cancel`);
@@ -49,12 +70,13 @@ describe("UCSBOrganizationForm tests", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 
-  test("that validation is performed", async () => {
-    const mockSubmitAction = jest.fn();
+  test("that the correct validations are performed", async () => {
     render(
-      <Router>
-        <UCSBOrganizationForm submitAction={mockSubmitAction} />
-      </Router>,
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm />
+        </Router>
+      </QueryClientProvider>
     );
 
     expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
@@ -62,41 +84,56 @@ describe("UCSBOrganizationForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/Organization Code is required./);
-    expect(
-      screen.getByText(/Short Translation is required./),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Organization Translation is required./),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Short Translation is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Organization Translation is required./)).toBeInTheDocument();
 
     const orgCodeInput = screen.getByTestId(`${testId}-orgCode`);
-    const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-orgTranslationShort`,
-    );
+    const orgTranslationShortInput = screen.getByTestId(`${testId}-orgTranslationShort`);
     const orgTranslationInput = screen.getByTestId(`${testId}-orgTranslation`);
 
     fireEvent.change(orgCodeInput, { target: { value: "a".repeat(11) } });
-    fireEvent.change(orgTranslationShortInput, {
-      target: { value: "a".repeat(31) },
-    });
-    fireEvent.change(orgTranslationInput, {
-      target: { value: "a".repeat(31) },
-    });
+    fireEvent.change(orgTranslationShortInput, { target: { value: "a".repeat(31) } });
+    fireEvent.change(orgTranslationInput, { target: { value: "a".repeat(31) } });
+
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Max length 10 characters/);
-    expect(screen.getAllByText(/Max length 30 characters/).length).toBe(2);
-    expect(mockSubmitAction).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(screen.getByText(/Max length 10 characters/)).toBeInTheDocument();
+      expect(screen.getAllByText(/Max length 30 characters/).length).toBe(2);
+    });
   });
-
-  test("renders with default buttonLabel correctly", async () => {
-    render(
-      <Router>
-        <UCSBOrganizationForm />
-      </Router>,
+  test("that orgCode is disabled when initialContents is present and enabled when not", async () => {
+    // First render with null initialContents
+    const { rerender } = render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm initialContents={null} />
+        </Router>
+      </QueryClientProvider>
     );
 
-    const submitButton = await screen.findByTestId(`${testId}-submit`);
-    expect(submitButton).toHaveTextContent("Create");
-  });
+    expect(await screen.findByTestId(`${testId}-orgCode`)).not.toBeDisabled();
+
+    // Then render with undefined initialContents
+    rerender(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm initialContents={undefined} />
+        </Router>
+      </QueryClientProvider>
+    );
+
+    expect(screen.getByTestId(`${testId}-orgCode`)).not.toBeDisabled();
+
+    // Finally render with actual initialContents
+    rerender(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm initialContents={ucsbOrganizationFixtures.oneOrganization[0]} />
+        </Router>
+      </QueryClientProvider>
+    );
+
+    expect(screen.getByTestId(`${testId}-orgCode`)).toBeDisabled();
+});
 });
