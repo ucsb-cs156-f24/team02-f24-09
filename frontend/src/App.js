@@ -11,18 +11,33 @@ import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 
+import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
+import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import UCSBOrganizationEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
+
 import UCSBDiningCommonsMenuItemIndexPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemIndexPage";
 import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
 import UCSBDiningCommonsMenuItemEditPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage";
+
+import MenuItemReviewIndexPage from "main/pages/MenuItemReview/MenuItemReviewIndexPage";
+import MenuItemReviewCreatePage from "main/pages/MenuItemReview/MenuItemReviewCreatePage";
+import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
 
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 import HelpRequestCreatePage from "main/pages/HelpRequest/HelpRequestCreatePage";
 import HelpRequestEditPage from "main/pages/HelpRequest/HelpRequestEditPage";
 
+import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
+import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
+import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
+import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
+import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 
 function App() {
   const { data: currentUser } = useCurrentUser();
@@ -38,6 +53,29 @@ function App() {
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route exact path="/ucsbdates" element={<UCSBDatesIndexPage />} />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/ucsborganization"
+              element={<UCSBOrganizationIndexPage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/ucsborganization/edit/:id"
+              element={<UCSBOrganizationEditPage />}
+            />
+            <Route
+              exact
+              path="/ucsborganization/create"
+              element={<UCSBOrganizationCreatePage />}
+            />
           </>
         )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
@@ -77,12 +115,46 @@ function App() {
             />
           </>
         )}
+
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/menuitemreview"
+              element={<MenuItemReviewIndexPage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/menuitemreview/edit/:id"
+              element={<MenuItemReviewEditPage />}
+            />
+            <Route
+              exact
+              path="/menuitemreview/create"
+              element={<MenuItemReviewCreatePage />}
+            />
+          </>
+        )}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
               exact
               path="/ucsbdiningcommonsmenuitem"
               element={<UCSBDiningCommonsMenuItemIndexPage />}
+            />
+            <Route
+              exact
+              path="/menuitemreview"
+              element={<MenuItemReviewIndexPage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest"
+              element={<RecommendationRequestIndexPage />}
             />
             <Route
               exact
@@ -105,6 +177,16 @@ function App() {
             />
             <Route
               exact
+              path="/menuitemreview/edit/:id"
+              element={<MenuItemReviewEditPage />}
+            />
+            <Route
+              exact
+              path="/menuitemreview/create"
+              element={<MenuItemReviewCreatePage />}
+            />
+            <Route
+              exact
               path="/helprequests/edit/:id"
               element={<HelpRequestEditPage />}
             />
@@ -112,6 +194,35 @@ function App() {
               exact
               path="/helprequests/create"
               element={<HelpRequestCreatePage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest/edit/:id"
+              element={<RecommendationRequestEditPage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest/create"
+              element={<RecommendationRequestCreatePage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route exact path="/articles" element={<ArticlesIndexPage />} />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/articles/edit/:id"
+              element={<ArticlesEditPage />}
+            />
+            <Route
+              exact
+              path="/articles/create"
+              element={<ArticlesCreatePage />}
             />
           </>
         )}
