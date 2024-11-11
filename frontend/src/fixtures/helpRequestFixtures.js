@@ -1,4 +1,4 @@
-const helpRequestsFixtures = {
+const helpRequestFixtures = {
   oneHelpRequest: {
     id: 1,
     requesterEmail: "test1@hotmail.com",
@@ -39,4 +39,4 @@ const helpRequestsFixtures = {
   ],
 };
 
-export { helpRequestsFixtures };
+export { helpRequestFixtures };
