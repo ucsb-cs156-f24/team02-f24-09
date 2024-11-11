@@ -23,6 +23,10 @@ import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/Re
 import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
 import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 
+import MenuItemReviewIndexPage from "main/pages/MenuItemReview/MenuItemReviewIndexPage";
+import MenuItemReviewCreatePage from "main/pages/MenuItemReview/MenuItemReviewCreatePage";
+import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -85,6 +89,29 @@ function App() {
           </>
         )}
 
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/menuitemreview"
+              element={<MenuItemReviewIndexPage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/menuitemreview/edit/:id"
+              element={<MenuItemReviewEditPage />}
+            />
+            <Route
+              exact
+              path="/menuitemreview/create"
+              element={<MenuItemReviewCreatePage />}
+            />
+          </>
+        )}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
