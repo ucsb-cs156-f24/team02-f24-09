@@ -65,4 +65,3 @@ export default function UCSBOrganizationTable({
     <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
   );
 }
-

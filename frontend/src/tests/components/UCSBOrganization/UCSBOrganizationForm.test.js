@@ -156,4 +156,3 @@ describe("UCSBOrganizationForm tests", () => {
     expect(screen.getByTestId(`${testId}-orgCode`)).toBeDisabled();
   });
 });
-
