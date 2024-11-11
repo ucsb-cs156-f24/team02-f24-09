@@ -153,7 +153,7 @@ describe("RecommendationRequestTable tests", () => {
   test("calls delete callback when Delete button is clicked by admin user", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/recommendationrequest")
+      .onDelete("/api/recommendationrequests")
       .reply(200, { message: "Recommendation Request deleted" });
 
     renderComponent({
