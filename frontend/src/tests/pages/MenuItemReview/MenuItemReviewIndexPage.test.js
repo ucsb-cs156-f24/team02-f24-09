@@ -149,6 +149,7 @@ describe("MenuItemReviewIndexPage tests", () => {
       .reply(200, "MenuItemReview with id 1 was deleted");
 
     // act
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
