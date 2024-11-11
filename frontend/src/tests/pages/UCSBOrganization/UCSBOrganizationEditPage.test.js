@@ -48,7 +48,9 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { id: "SKY" } }).timeout();
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { id: "SKY" } })
+        .timeout();
     });
 
     const queryClient = new QueryClient();
@@ -63,7 +65,9 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit Organization");
-      expect(screen.queryByTestId("UCSBOrganizationForm-orgCode")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("UCSBOrganizationForm-orgCode"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -80,17 +84,19 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { id: "SKY" } }).reply(200, {
-        orgCode: "SKY",
-        orgTranslationShort: "SKYDIVING",
-        orgTranslation: "SKYDIVING CLUB AT UCSB",
-        inactive: false
-      });
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { id: "SKY" } })
+        .reply(200, {
+          orgCode: "SKY",
+          orgTranslationShort: "SKYDIVING",
+          orgTranslation: "SKYDIVING CLUB AT UCSB",
+          inactive: false,
+        });
       axiosMock.onPut("/api/ucsborganization").reply(200, {
         orgCode: "SKY",
         orgTranslationShort: "SKYDIVING TEAM",
         orgTranslation: "UCSB SKYDIVING TEAM",
-        inactive: true
+        inactive: true,
       });
     });
 
@@ -108,8 +114,12 @@ describe("UCSBOrganizationEditPage tests", () => {
       await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
-      const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
-      const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
@@ -136,19 +146,19 @@ describe("UCSBOrganizationEditPage tests", () => {
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "Organization Updated - orgCode: SKY orgTranslationShort: SKYDIVING TEAM"
+        "Organization Updated - orgCode: SKY orgTranslationShort: SKYDIVING TEAM",
       );
 
       expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
       expect(axiosMock.history.put[0].params).toEqual({ id: "SKY" });
-      
+
       // Verify the data includes the orgCode
       const expectedData = {
         orgTranslationShort: "SKYDIVING TEAM",
         orgTranslation: "UCSB SKYDIVING TEAM",
-        inactive: true
+        inactive: true,
       };
       expect(axiosMock.history.put[0].data).toBe(JSON.stringify(expectedData));
     });
@@ -165,8 +175,12 @@ describe("UCSBOrganizationEditPage tests", () => {
       await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
-      const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
-      const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
@@ -187,7 +201,7 @@ describe("UCSBOrganizationEditPage tests", () => {
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "Organization Updated - orgCode: SKY orgTranslationShort: SKYDIVING TEAM"
+        "Organization Updated - orgCode: SKY orgTranslationShort: SKYDIVING TEAM",
       );
       expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
     });

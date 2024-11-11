@@ -6,22 +6,19 @@ import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function UCSBOrganizationEditPage({ storybook = false }) {
-  const { id } = useParams();  // Changed to match the :id parameter in App.js route
+  const { id } = useParams(); // Changed to match the :id parameter in App.js route
 
   const {
     data: organization,
     _error,
     _status,
-  } = useBackend(
-    [`/api/ucsborganization?id=${id}`],
-    {
-      method: "GET",
-      url: "/api/ucsborganization",
-      params: {
-        id: id,
-      },
-    }
-  );
+  } = useBackend([`/api/ucsborganization?id=${id}`], {
+    method: "GET",
+    url: "/api/ucsborganization",
+    params: {
+      id: id,
+    },
+  });
 
   const objectToAxiosPutParams = (organization) => ({
     url: "/api/ucsborganization",
@@ -38,15 +35,13 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
 
   const onSuccess = (organization) => {
     toast(
-      `Organization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}`
+      `Organization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}`,
     );
   };
 
-  const mutation = useBackendMutation(
-    objectToAxiosPutParams,
-    { onSuccess },
-    ["/api/ucsborganization/all"]
-  );
+  const mutation = useBackendMutation(objectToAxiosPutParams, { onSuccess }, [
+    "/api/ucsborganization/all",
+  ]);
 
   const { isSuccess } = mutation;
 

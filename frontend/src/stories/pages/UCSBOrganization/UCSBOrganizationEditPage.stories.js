@@ -8,7 +8,7 @@ import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures";
 
 export default {
   title: "pages/UCSBOrganization/UCSBOrganizationEditPage",
-  component: UCSBOrganizationEditPage
+  component: UCSBOrganizationEditPage,
 };
 
 const Template = () => <UCSBOrganizationEditPage storybook={true} />;
