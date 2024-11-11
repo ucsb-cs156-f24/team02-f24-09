@@ -33,6 +33,7 @@ function UCSBOrganizationForm({
             },
           })}
           isInvalid={Boolean(errors.orgCode)}
+          disabled={initialContents !== null && initialContents !== undefined}
         />
         <Form.Control.Feedback type="invalid">
           {errors.orgCode?.message}
