@@ -19,6 +19,10 @@ import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 import HelpRequestCreatePage from "main/pages/HelpRequest/HelpRequestCreatePage";
 import HelpRequestEditPage from "main/pages/HelpRequest/HelpRequestEditPage";
 
+import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
+import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
+import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -80,12 +84,18 @@ function App() {
             />
           </>
         )}
+
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
               exact
               path="/ucsbdiningcommonsmenuitem"
               element={<UCSBDiningCommonsMenuItemIndexPage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest"
+              element={<RecommendationRequestIndexPage />}
             />
             <Route
               exact
@@ -115,6 +125,16 @@ function App() {
               exact
               path="/helprequests/create"
               element={<HelpRequestCreatePage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest/edit/:id"
+              element={<RecommendationRequestEditPage />}
+            />
+            <Route
+              exact
+              path="/recommendationrequest/create"
+              element={<RecommendationRequestCreatePage />}
             />
           </>
         )}
