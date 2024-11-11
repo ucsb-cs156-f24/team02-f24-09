@@ -14,7 +14,11 @@ jest.mock("react-router-dom", () => ({
 describe("UCSBOrganizationForm tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["Organization Code", "Short Translation", "Organization Translation"];
+  const expectedHeaders = [
+    "Organization Code",
+    "Short Translation",
+    "Organization Translation",
+  ];
   const testId = "UCSBOrganizationForm";
 
   test("renders correctly with no initialContents", async () => {
@@ -23,7 +27,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -38,9 +42,11 @@ describe("UCSBOrganizationForm tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBOrganizationForm initialContents={ucsbOrganizationFixtures.oneOrganization[0]} />
+          <UCSBOrganizationForm
+            initialContents={ucsbOrganizationFixtures.oneOrganization[0]}
+          />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -60,7 +66,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
     const cancelButton = screen.getByTestId(`${testId}-cancel`);
@@ -76,7 +82,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
@@ -84,56 +90,69 @@ describe("UCSBOrganizationForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/Organization Code is required./);
-    expect(screen.getByText(/Short Translation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Organization Translation is required./)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Short Translation is required./),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Organization Translation is required./),
+    ).toBeInTheDocument();
 
     const orgCodeInput = screen.getByTestId(`${testId}-orgCode`);
-    const orgTranslationShortInput = screen.getByTestId(`${testId}-orgTranslationShort`);
+    const orgTranslationShortInput = screen.getByTestId(
+      `${testId}-orgTranslationShort`,
+    );
     const orgTranslationInput = screen.getByTestId(`${testId}-orgTranslation`);
 
     fireEvent.change(orgCodeInput, { target: { value: "a".repeat(11) } });
-    fireEvent.change(orgTranslationShortInput, { target: { value: "a".repeat(31) } });
-    fireEvent.change(orgTranslationInput, { target: { value: "a".repeat(31) } });
+    fireEvent.change(orgTranslationShortInput, {
+      target: { value: "a".repeat(31) },
+    });
+    fireEvent.change(orgTranslationInput, {
+      target: { value: "a".repeat(31) },
+    });
 
     fireEvent.click(submitButton);
 
+    // Split multiple assertions into separate waitFor calls
     await waitFor(() => {
       expect(screen.getByText(/Max length 10 characters/)).toBeInTheDocument();
-      expect(screen.getAllByText(/Max length 30 characters/).length).toBe(2);
     });
+
+    const maxLength30Errors = screen.getAllByText(/Max length 30 characters/);
+    expect(maxLength30Errors.length).toBe(2);
   });
+
   test("that orgCode is disabled when initialContents is present and enabled when not", async () => {
-    // First render with null initialContents
     const { rerender } = render(
       <QueryClientProvider client={queryClient}>
         <Router>
           <UCSBOrganizationForm initialContents={null} />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByTestId(`${testId}-orgCode`)).not.toBeDisabled();
 
-    // Then render with undefined initialContents
     rerender(
       <QueryClientProvider client={queryClient}>
         <Router>
           <UCSBOrganizationForm initialContents={undefined} />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(screen.getByTestId(`${testId}-orgCode`)).not.toBeDisabled();
 
-    // Finally render with actual initialContents
     rerender(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBOrganizationForm initialContents={ucsbOrganizationFixtures.oneOrganization[0]} />
+          <UCSBOrganizationForm
+            initialContents={ucsbOrganizationFixtures.oneOrganization[0]}
+          />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(screen.getByTestId(`${testId}-orgCode`)).toBeDisabled();
-});
+  });
 });
