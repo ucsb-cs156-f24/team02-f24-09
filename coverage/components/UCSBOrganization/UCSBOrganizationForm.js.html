@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -172,8 +172,7 @@
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -186,15 +185,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -287,39 +285,38 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 &nbsp;
-function OrganizationForm({
+function UCSBOrganizationForm({
   initialContents,
   submitAction,
   buttonLabel = "Create",
 }) {
-  // Stryker disable all
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {} });
-  // Stryker restore all
 &nbsp;
   const navigate = useNavigate();
 &nbsp;
-  const testIdPrefix = "OrganizationForm";
+  const testIdPrefix = "UCSBOrganizationForm";
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="orgCode"&gt;orgCode&lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="orgCode"&gt;Organization Code&lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "orgCode"}
+          data-testid={testIdPrefix + "-orgCode"}
           id="orgCode"
           type="text"
           {...register("orgCode", {
-            required: "orgCode is required.",
+            required: "Organization Code is required.",
             maxLength: {
               value: 10,
               message: "Max length 10 characters",
             },
           })}
           isInvalid={Boolean(errors.orgCode)}
+          disabled={initialContents !== null &amp;&amp; initialContents !== undefined}
         /&gt;
         &lt;Form.Control.Feedback type="invalid"&gt;
           {errors.orgCode?.message}
@@ -327,16 +324,14 @@ function OrganizationForm({
       &lt;/Form.Group&gt;
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="OrgTranslationShort"&gt;
-          OrgTranslationShort
-        &lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="orgTranslationShort"&gt;Short Translation&lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "-OrgTranslationShort"}
-          id="OrgTranslationShort"
+          data-testid={testIdPrefix + "-orgTranslationShort"}
+          id="orgTranslationShort"
           type="text"
           isInvalid={Boolean(errors.orgTranslationShort)}
           {...register("orgTranslationShort", {
-            required: "OrgTranslationShort is required.",
+            required: "Short Translation is required.",
             maxLength: {
               value: 30,
               message: "Max length 30 characters",
@@ -349,14 +344,16 @@ function OrganizationForm({
       &lt;/Form.Group&gt;
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="OrgTranslation"&gt;OrgTranslation&lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="orgTranslation"&gt;
+          Organization Translation
+        &lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "-OrgTranslation"}
-          id="OrgTranslation"
+          data-testid={testIdPrefix + "-orgTranslation"}
+          id="orgTranslation"
           type="text"
           isInvalid={Boolean(errors.orgTranslation)}
           {...register("orgTranslation", {
-            required: "OrgTranslation is required.",
+            required: "Organization Translation is required.",
             maxLength: {
               value: 30,
               message: "Max length 30 characters",
@@ -392,7 +389,7 @@ function OrganizationForm({
   );
 }
 &nbsp;
-export default OrganizationForm;
+export default UCSBOrganizationForm;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -400,7 +397,7 @@ export default OrganizationForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-11T05:55:33.899Z
+                at 2024-11-11T21:32:52.127Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
