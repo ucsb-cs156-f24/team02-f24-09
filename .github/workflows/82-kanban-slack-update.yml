@@ -49,6 +49,7 @@ jobs:
             echo "Contents of $GITHUB_OUTPUT:"
             cat "$GITHUB_OUTPUT"
           fi
+          
   # This job extracts the team name from the repository name
   # The team name is used to find the project ID for the team
   # It does this by extracting the last 6 characters of the repository name
@@ -416,3 +417,4 @@ jobs:
             📋 *Kanban Board Status* ✔️
             ```
             ${{ env.ascii_table_content }}
+            ```
