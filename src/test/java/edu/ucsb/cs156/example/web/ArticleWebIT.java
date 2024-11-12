@@ -26,12 +26,12 @@ public class ArticleWebIT extends WebTestCase {
 
         page.getByText("Create Article").click();
         assertThat(page.getByText("Create New Article")).isVisible();
-        page.getByTestId("ArticleForm-title").fill("New Article");
-        page.getByTestId("ArticleForm-url").fill("https://newarticle.com");
-        page.getByTestId("ArticleForm-explanation").fill("This is a new article explanation.");
-        page.getByTestId("ArticleForm-email").fill("admin@example.com");
-        page.getByTestId("ArticleForm-dateAdded").fill("2024-10-23T00:00:00");
-        page.getByTestId("ArticleForm-submit").click();
+        page.getByTestId("ArticlesForm-title").fill("New Article");
+        page.getByTestId("ArticlesForm-url").fill("https://newarticle.com");
+        page.getByTestId("ArticlesForm-explanation").fill("This is a new article explanation.");
+        page.getByTestId("ArticlesForm-email").fill("admin@example.com");
+        page.getByTestId("ArticlesForm-dateAdded").fill("2024-10-23T00:00:00");
+        page.getByTestId("ArticlesForm-submit").click();
 
         assertThat(page.getByTestId("ArticleTable-cell-row-0-col-explanation"))
                 .hasText("This is a new article explanation.");
