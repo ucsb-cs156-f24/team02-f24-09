@@ -33,19 +33,19 @@ public class ArticleWebIT extends WebTestCase {
         page.getByTestId("ArticlesForm-dateAdded").fill("2024-10-23T00:00:00");
         page.getByTestId("ArticlesForm-submit").click();
 
-        assertThat(page.getByTestId("ArticleTable-cell-row-0-col-explanation"))
+        assertThat(page.getByTestId("ArticlesTable-cell-row-0-col-explanation"))
                 .hasText("This is a new article explanation.");
 
-        page.getByTestId("ArticleTable-cell-row-0-col-Edit-button").click();
+        page.getByTestId("ArticlesTable-cell-row-0-col-Edit-button").click();
         assertThat(page.getByText("Edit Article")).isVisible();
-        page.getByTestId("ArticleForm-explanation").fill("Updated explanation");
-        page.getByTestId("ArticleForm-submit").click();
+        page.getByTestId("ArticlesForm-explanation").fill("Updated explanation");
+        page.getByTestId("ArticlesForm-submit").click();
 
-        assertThat(page.getByTestId("ArticleTable-cell-row-0-col-explanation")).hasText("Updated explanation");
+        assertThat(page.getByTestId("ArticlesTable-cell-row-0-col-explanation")).hasText("Updated explanation");
 
-        page.getByTestId("ArticleTable-cell-row-0-col-Delete-button").click();
+        page.getByTestId("ArticlesTable-cell-row-0-col-Delete-button").click();
 
-        assertThat(page.getByTestId("ArticleTable-cell-row-0-col-title")).not().isVisible();
+        assertThat(page.getByTestId("ArticlesTable-cell-row-0-col-title")).not().isVisible();
     }
 
     @Test
@@ -55,6 +55,6 @@ public class ArticleWebIT extends WebTestCase {
         page.getByText("Articles").click();
 
         assertThat(page.getByText("Create Article")).not().isVisible();
-        assertThat(page.getByTestId("ArticleTable-cell-row-0-col-title")).not().isVisible();
+        assertThat(page.getByTestId("ArticleTables-cell-row-0-col-title")).not().isVisible();
     }
 }
