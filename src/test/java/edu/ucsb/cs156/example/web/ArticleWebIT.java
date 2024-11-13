@@ -21,6 +21,7 @@ public class ArticleWebIT extends WebTestCase {
     @Test
     public void admin_user_can_create_edit_delete_article() throws Exception {
         setupUser(true);
+        LocalDateTime dateAdded = LocalDateTime.of(2024, 10, 23, 0, 0);
 
         page.getByText("Articles").click();
 
@@ -30,7 +31,7 @@ public class ArticleWebIT extends WebTestCase {
         page.getByTestId("ArticlesForm-url").fill("https://newarticle.com");
         page.getByTestId("ArticlesForm-explanation").fill("This is a new article explanation.");
         page.getByTestId("ArticlesForm-email").fill("admin@example.com");
-        page.getByTestId("ArticlesForm-dateAdded").fill("2024-10-23T00:00:00");
+        page.getByTestId("ArticlesForm-dateAdded").fill(dateAdded);
         page.getByTestId("ArticlesForm-submit").click();
 
         assertThat(page.getByTestId("ArticlesTable-cell-row-0-col-explanation"))
