@@ -27,7 +27,7 @@ public class RecommendationRequestWebIT extends WebTestCase {
         assertThat(page.getByText("Create New Recommendation Request")).isVisible();
         page.getByTestId("RecommendationRequestForm-requesterEmail").fill("Tester@test.ci");
         page.getByTestId("RecommendationRequestForm-professorEmail").fill("TestProfessor@test.ci");
-        page.getByTestId("RecommendationRequestForm-explanation").fill("EXTREME");
+        page.getByTestId("RecommendationRequestForm-explanation").fill("test");
 
         page.getByTestId("RecommendationRequestForm-dateNeeded").fill("2024-10-10T00:00");
         page.getByTestId("RecommendationRequestForm-dateRequested").fill("2024-10-10T00:00");
@@ -35,14 +35,14 @@ public class RecommendationRequestWebIT extends WebTestCase {
         page.getByTestId("RecommendationRequestForm-submit").click();
 
         assertThat(page.getByTestId("RecommendationRequestTable-cell-row-0-col-explanation"))
-                .hasText("EXTREME");
+                .hasText("test");
 
         page.getByTestId("RecommendationRequestTable-cell-row-0-col-Edit-button").click();
         assertThat(page.getByText("Edit Recommendation Request")).isVisible();
-        page.getByTestId("RecommendationRequestForm-explanation").fill("INSANE");
+        page.getByTestId("RecommendationRequestForm-explanation").fill("test2");
         page.getByTestId("RecommendationRequestForm-submit").click();
 
-        assertThat(page.getByTestId("RecommendationRequestTable-cell-row-0-col-explanation")).hasText("INSANE");
+        assertThat(page.getByTestId("RecommendationRequestTable-cell-row-0-col-explanation")).hasText("test2");
 
         page.getByTestId("RecommendationRequestTable-cell-row-0-col-Delete-button").click();
 
